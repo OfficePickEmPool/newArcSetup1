@@ -1,0 +1,168 @@
+<Letsplaydashboard>
+    <GridLayout [class.dialogOpen]="dialogOpen">
+        <GridLayout class="content">
+            <GridLayout rows="*,*,*,*">
+                <Label row="0" text="Make Pick" class="headersub-msg"></Label>
+                <Label row="1" col="0" [text]="selectedWeekName" class="c-grid-heading"
+                    width="100%"></Label>
+                <GridLayout row="2" rows="3*, *" style="width:90%">
+                    <GridLayout row="0" rows="auto" columns="*,*" visibility="{{hideSwipeBtn ? 'hidden' : 'visible'}}">
+                        <GridLayout row="0" col="0" verticalAlignment="bottom"
+                            class="m-t-10">
+                            <Image src=" ~/Images/prev-btn.png" class="c-nav-button input"
+                                horizontalAlignment="Right" (tap)="skipIntro(1)"
+                                [isEnabled]="!isBusy"
+                                [isUserInteractionEnabled]="!isBusy">
+                            </Image>
+                        </GridLayout>
+                        <GridLayout row="0" col="1" verticalAlignment="bottom"
+                            class="m-t-10">
+                            <Image src="~/Images/next-btn.png" class="c-nav-button input"
+                                horizontalAlignment="Left" (tap)="skipIntro(2)"
+                                [isEnabled]="!isBusy"
+                                [isUserInteractionEnabled]="!isBusy"></Image>
+                        </GridLayout>
+                    </GridLayout>
+                    <ActivityIndicator row="1" [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
+                    <GridLayout row="1" rows="*" #gridContain (swipe)="onSwipe($event)">
+                        <GridLayout row="0" *ngFor="let item of leagueGames; let i = index"
+                            visibility="{{currentSlideNum == i || prevSlideNum == i ? 'visible' : 'hidden'}}"
+                            rows="*, 2*,*,*,*,*" col="0">
+                            <GridLayout rows="*,*" width="100%" row="0" style="margin-top:10px;">
+                                <Label row="0" text="Game {{i+1}}" class="lblRules borderRules"></Label>
+                                <Label row="1" colSpan="2" class="list-separator"></Label>
+                            </GridLayout>
+                            <GridLayout rows="*" width="100%" row="1">
+                                <Label row="0" text="{{item.LeagueGame.Game.StartDateTime | date :'EEEE MM/dd | h:mm a ' }}"
+                                    class="c-lable-mypick"></Label>
+                            </GridLayout>
+                            <GridLayout class="carousel-item-circle" row="2"
+                                columns="*,30,*" horizontalAlignment="center"
+                                verticalAlignment="center">
+                                <GridLayout rows="*" col="0" (tap)="selectGame(item.LeagueGame.Game.Team1.Id,i)">
+                                    <GridLayout rows="*,*,*" [class]="item.TeamId == item.LeagueGame.Game.Team1.Id ? 'c-grid-bg c-grid-border' : 'c-grid-bg'">
+                                        <Label row="0" text="FAV" class="c-lbl-fav-left"
+                                            horizontalAlignment="Left"
+                                            visibility="{{item.LeagueGame.Game.Team1.Id == item.LeagueGame.Game.FavouriteTeamId ? 'visible' : 'hidden'}}"
+                                            verticalAlignment="Top"></Label>
+                                        <Image row="1" [src]="item.TeamId == item.LeagueGame.Game.Team1.Id ? '~/Images/red-halmet.png' : '~/Images/grey-halmet2.png'"
+                                            class="c-halmet"></Image>
+                                        <Label row="2" text="{{item.LeagueGame.Game.Team1.Name}}"
+                                            class="c-lable-name" textWrap="true"
+                                            (loaded)="onLabelLoaded($event)"></Label>
+
+                                    </GridLayout>
+
+                                </GridLayout>
+                                <GridLayout col="1" verticalAlignment="middle">
+                                    <Image [src]="item.LeagueGame.Game.NoHomeTeam ? '~/Images/vs.png' : '~/Images/at.png'"></Image>
+                                </GridLayout>
+                                <GridLayout rows="*" col="2" (tap)="selectGame(item.LeagueGame.Game.Team2.Id,i)">
+                                    <GridLayout rows="*,*,*" [class]="item.TeamId == item.LeagueGame.Game.Team1.Id ? 'c-grid-bg' : 'c-grid-bg c-grid-border'">
+                                        <Label row="0" text="FAV" class="c-lbl-fav-right"
+                                            horizontalAlignment="Right"
+                                            visibility="{{item.LeagueGame.Game.Team2.Id == item.LeagueGame.Game.FavouriteTeamId ? 'visible' : 'hidden'}}"
+                                            verticalAlignment="Top"></Label>
+                                        <Image row="1" [src]="item.TeamId == item.LeagueGame.Game.Team2.Id ? '~/Images/blue-halmet.png' : '~/Images/grey-halmet.png'"
+                                            class="c-halmet"></Image>
+                                        <Label row="2" text="{{item.LeagueGame.Game.Team2.Name}}"
+                                            class="c-lable-name" textWrap="true"
+                                            (loaded)="onLabelLoaded($event)"></Label>
+
+                                    </GridLayout>
+
+                                </GridLayout>
+                            </GridLayout>
+                            <GridLayout row="3" rows="*,*" columns="*,*,*,*">
+                                <Button row="0" colspan="4" [text]="isGameStarted(item.LeagueGame.Game.StartDateTime)==true?'Game Started':'Save Pick'"
+                                    class="c-login-btn border-c-login-btn"
+                                    [isEnabled]="(!item.TeamId || isGameStarted(item.LeagueGame.Game.StartDateTime))"
+                                    (tap)="pickGame(item,false,i);"></Button>
+                                <GridLayout row="1" rows="*,*" colspan="4"
+                                    *ngIf="firstGameOfWeek == item.LeagueGame.Id">
+                                    <Label row="0" text="Tie Breaker ? "
+                                        (tap)="showPopupTeam()"
+                                        horizontalAlignment="center" class="c-lable-mypick"></Label>
+                                    <GridLayout row="1" columns="*,*,20,*"
+                                        width="90%">
+                                        <GridLayout col="0" rows="*,*,*">
+                                            <Label row="0" (tap)="firstIncrementCount(countmax1)"
+                                                [text]="plusIcon"
+                                                horizontalAlignment="center"
+                                                class="ico c-lable-opppick"></Label>
+                                            <Label row="1" text="{{countmax1}}"
+                                                horizontalAlignment="center"
+                                                class="c-lable-score-low"></Label>
+                                            <Label row="2" (tap)="firstDecrementCount(countmax1)"
+                                                [text]="minusIcon"
+                                                horizontalAlignment="center"
+                                                class="ico c-lable-opppick"></Label>
+                                        </GridLayout>
+                                        <GridLayout col="1" rows="*,*,*">
+                                            <Label row="0" (tap)="secondIncrementCount(countmax2)"
+                                                [text]="plusIcon"
+                                                horizontalAlignment="center"
+                                                class="ico c-lable-opppick"></Label>
+                                            <Label row="1" text="{{countmax2}}"
+                                                horizontalAlignment="center"
+                                                class="c-lable-score-low"></Label>
+                                            <Label row="2" (tap)="secondDecrementCount(countmax2)"
+                                                [text]="minusIcon"
+                                                horizontalAlignment="center"
+                                                class="ico c-lable-opppick"></Label>
+                                        </GridLayout>
+                                        <GridLayout col="2" rows="*,*,*">
+                                            <Label row="0" text=" "
+                                                horizontalAlignment="center"></Label>
+                                            <Label row="1" text="   "
+                                                horizontalAlignment="center"
+                                                class="c-lable-score-dot"></Label>
+                                            <Label row="2" text=" "
+                                                horizontalAlignment="center"></Label>
+                                        </GridLayout>
+                                        <GridLayout col="3" rows="*,*,*">
+                                            <Label row="0" (tap)="thirdIncrementCount(countmax3)"
+                                                [text]="plusIcon"
+                                                horizontalAlignment="center"
+                                                class="ico c-lable-opppick"></Label>
+                                            <Label row="1" text="{{countmax3}}"
+                                                horizontalAlignment="center"
+                                                class="c-lable-score-low"></Label>
+                                            <Label row="2" (tap)="thirdDecrementCount(countmax3)"
+                                                [text]="minusIcon"
+                                                horizontalAlignment="center"
+                                                class="ico c-lable-opppick"></Label>
+                                        </GridLayout>
+                                    </GridLayout>
+                                </GridLayout>
+                            </GridLayout>
+                            <GridLayout row="4" *ngIf="firstGameOfWeek == item.LeagueGame.Id">
+                                <Button [text]="isGameStarted(item.LeagueGame.Game.StartDateTime)==true?'Game Started':'Save Tie Breaker'"
+                                    [isEnabled]="(!tieBreaker.SelectedTieBreaker || !item.TeamId || isGameStarted(item.LeagueGame.Game.StartDateTime))"
+                                    (tap)="pickGame(item,true,i);" class="c-login-btn border-c-login-btn button"></Button>
+                            </GridLayout>
+                            <GridLayout row="5">
+                                <Button text="View All" (tap)="makePickSummary()"
+                                    class="c-view-btn border-c-view-btn"></Button>
+                            </GridLayout>
+                        </GridLayout>
+                    </GridLayout>
+
+                </GridLayout>
+
+            </GridLayout>
+        </GridLayout>
+        <AbsoluteLayout class="dialog-wrapper input" [isEnabled]="!isBusy"
+            [isUserInteractionEnabled]="!isBusy">
+            <StackLayout class="dialog">
+                <Label class="c-popup-header" text="Tie Breaker"></Label>
+                <Label style="padding:0px 25px; text-align:justify;" text="Total combined score of game will be used as a tiebreaker. The closest to the total, will get the not (you are encouraged to use decimals to help break ties)."
+                    textWrap="true"></Label>
+
+                <Button class="c-login-btn border-c-login-btn" text="Close"
+                    (tap)="closePopupTeam()" style="margin:30px 0px;">
+                </Button>
+            </StackLayout>
+        </AbsoluteLayout>
+    </GridLayout>
+</Letsplaydashboard>

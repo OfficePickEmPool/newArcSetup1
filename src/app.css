@@ -1,0 +1,362 @@
+/*
+In NativeScript, the app.css file is where you place CSS rules that
+you would like to apply to your entire application. Check out
+http://docs.nativescript.org/ui/styling for a full list of the CSS
+selectors and properties you can use to style UI components.
+
+/*
+For example, the following CSS rule changes the font size of all UI
+components that have the btn class name.
+*/
+.btn {
+  font-size: 18;
+}
+
+/*
+In many cases you may want to use the NativeScript core theme instead
+of writing your own CSS rules. For a full list of class names in the theme
+refer to http://docs.nativescript.org/ui/theme.
+*/
+@import '~nativescript-theme-core/css/core.light.css';
+
+/*
+In NativeScript, the app.css file is where you place CSS rules that
+you would like to apply to your entire application. Check out
+http://docs.nativescript.org/ui/styling for a full list of the CSS
+selectors and properties you can use to style UI components.
+
+/*
+For example, the following CSS rule changes the font size of all UI
+components that have the btn class name.
+*/
+.btn {
+  font-size: 18;
+}
+
+/*
+In many cases you may want to use the NativeScript core theme instead
+of writing your own CSS rules. For a full list of class names in the theme
+refer to http://docs.nativescript.org/ui/theme.
+*/
+@import '~nativescript-theme-core/css/core.light.css';
+
+.ico {
+  font-family: 'IcoMoon-Free';
+}
+.common-background {
+  background-image: url('~/Images/bg.png');
+  background-size: cover;
+}
+.c-popup-header {
+  background-color: #4e7c01;
+  text-align: left;
+  color: #fff;
+  font-size: 22px;
+  padding: 25px;
+  margin-bottom: 50px;
+}
+.headersub-msg {
+  background-color: #4e7c01;
+  text-align: center;
+  color: #fff;
+  font-size: 22px;
+  padding: 25px 0px;
+}
+.masterHeader {
+  background-color: blue;
+  text-align: center;
+  color: #fff;
+  font-size: 22px;
+  padding: 25px 0px;
+}
+.message {
+  background-color: orange;
+  text-align: center;
+  color: #fff;
+  font-size: 22px;
+  padding: 25px 0px;
+}
+.normal-font {
+  color: #4d4d4d;
+  padding-left: 0;
+  padding-right: 0;
+  font-size: 25px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  width: 90%;
+  padding: 0;
+  margin: 0;
+}
+.c-text {
+  background-color: transparent;
+  font-size: 18px;
+  border-bottom-color: #4d4d4d;
+  border-bottom-width: 3;
+  color: #4d4d4d;
+  padding-left: 0;
+  padding-right: 0;
+  /* placeholder-color: #4d4d4d;   */
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  width: 90%;
+  padding: 0;
+  margin: 0;
+  margin-top: 80px;
+}
+.c-login-btn {
+  background-color: #006eeb;
+  margin-top: 80px;
+  text-align: center;
+  color: #fff;
+  font-size: 18px;
+  padding: 40px 25px;
+  width: 90%;
+  border-radius: 50%;
+  text-transform: capitalize;
+}
+.border-c-login-btn {
+  border-color: #0036c3;
+  border-bottom-style: dotted;
+  border-width: 10px;
+}
+.c-create-btn {
+  background-color: #fff;
+  color: rgb(0, 0, 0);
+  padding: 40px 0px;
+  font-size: 22px;
+  text-transform: capitalize;
+}
+.c-fpassword-btn {
+  background-color: rgb(31, 31, 192);
+  color: #fff;
+  padding: 40px 0px;
+  font-size: 22px;
+  text-transform: capitalize;
+}
+.c-font {
+  color: #4d4d4d;
+  font-size: 15px;
+  text-decoration: underline;
+}
+.bottom-msg {
+  background-color: #4d4d4d;
+  color: #fff;
+  font-size: 18px;
+  padding: 30px;
+  text-align: center;
+  margin-top: 60px;
+}
+.header-msg {
+  color: #ccc;
+  background-color: rgb(139, 12, 12);
+  font-size: 22px;
+  padding: 40px;
+  font-weight: bold;
+  text-align: center;
+}
+.border-c-exit-btn {
+  border-color: #901504;
+  border-bottom-style: dotted;
+  border-width: 10px;
+}
+.c-exit-btn {
+  background-color: #b71105;
+  margin-top: 80px;
+  text-align: center;
+  color: #fff;
+  font-size: 18px;
+  padding: 40px 25px;
+  width: 90%;
+  border-radius: 50%;
+  text-transform: capitalize;
+}
+
+.c-ribbon {
+  width: 70%;
+  margin-bottom: 100px;
+}
+.welcome-logo {
+  width: 350px;
+  height: 350px;
+  margin: 120px 0px;
+}
+.c-grid-heading {
+  font-size: 13px;
+  color: #4d4d4d;
+  padding: 20px 0px;
+  background-color: #ccc;
+  font-weight: bold;
+}
+.c-grid-font {
+  font-size: 12px;
+  margin-right: 15px;
+}
+.c-grid {
+  width: 100%;
+
+  padding: 20px;
+}
+
+/* Add mobile styles for the component here.  */
+
+.body {
+  padding-top: 0;
+  background-color: #ffffff;
+}
+
+.list-separator {
+  width: 100%;
+  height: 5px;
+  background-color: #ccc;
+  margin-top: 25px;
+  padding: 0px;
+}
+
+.first-line {
+  margin-top: 12;
+  color: #4d4d4d;
+  font-size: 18px;
+}
+.c-first-line {
+  margin-top: 17;
+  color: #4d4d4d;
+  font-size: 18px;
+}
+.after-line {
+  margin-bottom: 12;
+}
+.c-title {
+  width: 90%;
+  margin: 15px 0px;
+  font-weight: bold;
+}
+.second-line {
+  font-size: 12;
+}
+
+.icon-selected {
+  width: 24;
+}
+
+.btn-tab {
+  padding: 10 15;
+  font-weight: bold;
+  /*background-color: #024184;*/
+  color: #cccccc;
+  border-bottom-width: 2;
+  border-bottom-color: #cccccc;
+}
+
+.btn-tab-active {
+  color: #024184;
+  border-bottom-color: #024184;
+}
+
+.title {
+  font-size: 16;
+  text-align: left;
+  color: #024184;
+}
+
+.sub-title {
+  font-size: 14;
+  text-align: left;
+}
+.c-grid {
+  width: 90%;
+  background-color: #fff;
+  padding: 30px;
+
+  border-radius: 10px;
+}
+.ng-invalid::before {
+  background-image: url('~/Images/require.png');
+  background-repeat: no-repeat;
+  background-position: right;
+}
+.c-grid-button {
+  background-color: #006eeb;
+
+  text-align: center;
+  color: #fff;
+
+  padding: 25px 25px;
+  width: 50px;
+  border-radius: 50%;
+  text-transform: capitalize;
+}
+.c-transperent {
+  background-color: transparent;
+}
+
+.c-schedules {
+  width: 90%;
+  background-color: #f1f1f1;
+}
+.c-border {
+  border-style: solid;
+  border-width: 5px;
+  padding: 20px 30px;
+  border-color: #ccc;
+  border-radius: 10px;
+}
+.c-lbl-ios {
+  background-image: url('~/Images/dropdown.png');
+  background-repeat: no-repeat;
+  background-position: right;
+
+  background-size: 20px 15px;
+}
+.c-lbl-android {
+  background-image: url('~/Images/dropdown.png');
+  background-repeat: no-repeat;
+  background-position: right;
+}
+.accordation-heading {
+  text-align: left;
+  font-size: 16px;
+  padding: 0px 15px;
+}
+.accordation-heading2 {
+  text-align: right;
+  font-size: 17px;
+  padding: 0px 15px;
+}
+.accordation-content {
+  background-color: #dfdddd;
+  text-align: left;
+}
+.accordation-content label {
+  padding: 15px;
+  color: #4d4d4d;
+}
+.input:disabled {
+  background-color: white;
+  opacity: 0.5;
+}
+.button:disabled {
+  background-color: #4d4d4d;
+  margin-top: 80px;
+  text-align: center;
+  color: #fff;
+  font-size: 18px;
+  padding: 40px 25px;
+  width: 90%;
+  border-radius: 50%;
+  text-transform: capitalize;
+  border-color: #000000;
+  border-bottom-style: dotted;
+  border-width: 10px;
+}
+
+.add-button {
+  background-color: #8f91de;
+  width: 70;
+  height: 70;
+  font-size: 50;
+  padding: 0 0 8;
+  border-radius: 50%;
+  color: #fff;
+  margin-right: 15;
+}
+ActivityIndicator {
+  color: rgb(214, 38, 38);
+}

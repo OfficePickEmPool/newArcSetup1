@@ -1,0 +1,48 @@
+<StackLayout>
+    <GridLayout rows="*, auto">
+        <GridLayout>
+        </GridLayout>
+        <GridLayout row="0" tkMainContent>
+            <Body>
+                <ng-content>
+                </ng-content>
+            </Body>
+        </GridLayout>
+
+        <GridLayout columns="*, *, *, *, *" height="60" row="1" class="bottom-navigation  c-bottom-menu">
+            <GridLayout col="0" rows="auto, *" class="bottom-navigation-item"
+                [class.selected]="isComponentSelected('/leaguedashboardhome')"
+                (tap)="onNavItemTap('/leaguedashboardhome')">
+                <Label row="0" [text]="homeIcon" class="ico icon">
+                </Label>
+                <Label row="1" text="Dashboard" class="label"></Label>
+            </GridLayout>
+
+            <GridLayout col="1" rows="auto, *" class="bottom-navigation-item"
+                [class.selected]="isComponentSelected('/schedules')" (tap)="onNavItemTap('/schedules')">
+                <Label row="0" [text]="scheduleIcon" class="ico icon"></Label>
+                <Label row="1" text="Schedules" class="label"></Label>
+            </GridLayout>
+
+            <GridLayout col="2" rows="auto, *" class="bottom-navigation-item"
+                [class.selected]="isComponentSelected('/scores')" (tap)="onNavItemTap('/scores')">
+                <Label row="0" [text]="scoreIcon" class="ico icon"></Label>
+                <Label row="1" text="Scores" class="label"></Label>
+            </GridLayout>
+
+            <GridLayout col="3" rows="auto, *" class="bottom-navigation-item"
+                [class.selected]="isComponentSelected('/notes')" (tap)="onNavItemTap('/notes')">
+                <Label row="0" [text]="noteIcon" class="ico icon">
+                </Label>
+                <Label row="1" text="Notes" class="label"></Label>
+            </GridLayout>
+
+            <GridLayout col="4" rows="auto, *" class="bottom-navigation-item"
+                [class.selected]="isComponentSelected('/viewplayers')" (tap)="onNavItemTap('/viewplayers')">
+                <Label row="0" [text]="viewIcon" class="ico icon">
+                </Label>
+                <Label row="1" text="View Players" class="label"></Label>
+            </GridLayout>
+        </GridLayout>
+    </GridLayout>
+</StackLayout>

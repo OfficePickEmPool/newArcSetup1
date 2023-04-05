@@ -1,0 +1,99 @@
+<Letsplaydashboard>
+    <GridLayout rows="*,*,*,*">
+        <Label row="0" text="Statistics" class="headersub-msg"></Label>
+        <Label row="1" col="0" [text]="selectedWeekName" hint="Select Week"
+            [class]="device=='Android' ? 'c-text c-lbl-android' : 'c-text c-lbl-ios'"
+            (tap)="action()" [isEnabled]="!isBusy" [isUserInteractionEnabled]="!isBusy"></Label>
+        <GridLayout row="2" rows="3*, *" style="width:90%">
+            <GridLayout row="0" rows="auto" columns="*,*" visibility="{{hideSwipeBtn ? 'hidden' : 'visible'}}">
+                <GridLayout row="0" col="0" verticalAlignment="bottom" class="m-t-10">
+                    <Image src="~/Images/prev-btn.png" class="c-nav-button input"
+                        horizontalAlignment="Right" (tap)="skipIntro(1)"
+                        [isEnabled]="!isBusy" [isUserInteractionEnabled]="!isBusy"></Image>
+                </GridLayout>
+                <GridLayout row="0" col="1" verticalAlignment="bottom" class="m-t-10">
+                    <Image src="~/Images/next-btn.png" class="c-nav-button input"
+                        horizontalAlignment="Left" (tap)="skipIntro(2)"
+                        [isEnabled]="!isBusy" [isUserInteractionEnabled]="!isBusy"></Image>
+                </GridLayout>
+            </GridLayout>
+
+            <GridLayout class="input" row="1" rows="*" #gridContain (swipe)="onSwipe($event)"
+                [isEnabled]="!isBusy" [isUserInteractionEnabled]="!isBusy">
+                <GridLayout row="0" rows="*, 2*,*" col="0" *ngFor="let item of gameStatistics; let i = index"
+                    visibility="{{currentSlideNum == i || prevSlideNum == i ? 'visible' : 'hidden'}}">
+                    <GridLayout rows="*,*" width="100%" row="0" style="margin-top:10px;">
+                        <Label row="0" text="Game {{i+1}}" class="lblRules borderRules"></Label>
+                        <Label row="1" colSpan="2" class="list-separator"></Label>
+                    </GridLayout>
+                    <GridLayout rows="*" width="100%" row="1">
+                        <Label row="0" text="{{item.Game.StartDateTime | date :'EEEE MM/dd | h:mm a ' }}"
+                            class="c-lable-mypick"></Label>
+                    </GridLayout>
+                    <GridLayout class="carousel-item-circle" row="2" columns="*,30,*"
+                        horizontalAlignment="center" verticalAlignment="center">
+                        <GridLayout rows="*,*" col="0">
+                            <GridLayout rows="*,*,*" class="c-grid-bg">
+                                <GridLayout row="0" rows="*" columns="*,*">
+                                    <Label row="0" col="0" text="FAV" class="c-lbl-fav-left"
+                                        horizontalAlignment="Left"
+                                        verticalAlignment="Top" visibility="{{item.Game.Team1.Id == item.Game.FavouriteTeamId ? 'visible' : 'hidden'}}"></Label>
+                                    <Label row="0" col="1" text="{{item.Team1PickedUsers != undefined && item.Team1PickedUsers != null &&item.Team1PickedUsers.length != null && item.Team1PickedUsers.length >= 0 ? item.Team1PickedUsers.length : 0}}"
+                                        class="c-lbl-fav-right"
+                                        horizontalAlignment="Right"
+                                        verticalAlignment="Top"></Label>
+                                </GridLayout>
+                                <Image row="1" src="~/Images/red-halmet.png"
+                                    class="c-halmet"></Image>
+                                <Label row="2" text="{{item.Game.Team1.Name}}"
+                                    class="c-lable-name" textWrap="true"
+                                    (loaded)="onLabelLoaded($event)"></Label>
+                            </GridLayout>
+                            <GridLayout row="1">
+                                <StackLayout>
+                                    <Label *ngFor="let row of item.Team1PickedUsers;let r = index"
+                                        text="{{row.UserName}}" [class]="r%2 == 0 ? 'c-lable-opppick' : 'c-lable-mypick'"
+                                        style="vertical-align: middle;"></Label>
+                                </StackLayout>
+                            </GridLayout>
+                        </GridLayout>
+                        <GridLayout col="1" verticalAlignment="middle">
+                            <Image [src]="item.Game.NoHomeTeam ? '~/Images/vs.png' : '~/Images/at.png'"></Image>
+                        </GridLayout>
+                        <GridLayout rows="*,*" col="2">
+                            <GridLayout rows="*,*,*" class="c-grid-bg">
+                                <GridLayout row="0" rows="*" columns="*,*">
+                                    <Label row="0" col="0" text="{{item.Team2PickedUsers != undefined && item.Team2PickedUsers != null &&item.Team2PickedUsers.length != null && item.Team2PickedUsers.length >= 0 ? item.Team2PickedUsers.length : 0}}"
+                                        class="c-lbl-fav-left"
+                                        horizontalAlignment="Left"
+                                        verticalAlignment="Top"></Label>
+                                    <Label row="0" col="1" text="FAV" class="c-lbl-fav-right"
+                                        horizontalAlignment="Right"
+                                        verticalAlignment="Top" visibility="{{item.Game.Team2.Id == item.Game.FavouriteTeamId ? 'visible' : 'hidden'}}"></Label>
+                                </GridLayout>
+                                <Image row="1" src="~/Images/blue-halmet.png"
+                                    class="c-halmet"></Image>
+                                <Label row="2" text="{{item.Game.Team2.Name}}"
+                                    class="c-lable-name" textWrap="true"
+                                    (loaded)="onLabelLoaded($event)"></Label>
+
+                            </GridLayout>
+                            <GridLayout row="1">
+                                <StackLayout>
+                                    <Label *ngFor="let row of item.Team2PickedUsers;let r = index"
+                                        text="{{row.UserName}}" [class]="r%2 == 0 ? 'c-lable-opppick' : 'c-lable-mypick'"
+                                        style="vertical-align: middle;"></Label>
+                                </StackLayout>
+                            </GridLayout>
+                        </GridLayout>
+                    </GridLayout>
+
+                </GridLayout>
+            </GridLayout>
+
+            <ActivityIndicator [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
+
+        </GridLayout>
+
+    </GridLayout>
+</Letsplaydashboard>

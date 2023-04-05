@@ -1,0 +1,17 @@
+<Leaguedashboard>
+    <GridLayout rows="*,*,*,*" columns="*">
+        <Label row="0" text="Updates/Notices" class="headersub-msg"></Label>
+        <!-- <TextField text="" hint="Email" class="c-text"></TextField> -->
+        <TextView row="1" editable="true" class="c-text-view button"
+            [(ngModel)]="allNotice" (textChange)="somethingChanged()"
+            [isEnabled]="!isBusy">
+
+        </TextView>
+        <ActivityIndicator [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
+        <Button row="2" [isEnabled]="!isBusy && isEnabled" text="Save Notice"
+            class="c-login-btn border-c-login-btn button" (tap)="onNotesSaveBtnTap()">
+        </Button>
+        <Button row="3" text="Exit" class="c-exit-btn border-c-exit-btn button"
+            [nsRouterLink]="['/leaguedashboardhome']" [isEnabled]="!isBusy"></Button>
+    </GridLayout>
+</Leaguedashboard>

@@ -1,0 +1,30 @@
+<StackLayout>
+    <GridLayout rows="*,auto">
+        <GridLayout>
+        </GridLayout>
+        <GridLayout row="0" tkMainContent>
+
+            <Body>
+                <ng-content>
+                </ng-content>
+            </Body>
+        </GridLayout>
+
+        <GridLayout height="60" row="1" columns="*, *" class="bottom-navigation c-bottom-menu">
+           
+                <GridLayout col="0" rows="auto, *" class="bottom-navigation-item"
+                    [class.selected]="isComponentSelected('/chathome')" (tap)="onNavItemTap('/chathome')">
+                    <Label row="0" [text]="homeIcon" class="ico icon">
+                    </Label>
+                    <Label row="1" text="Chats" class="label"></Label>
+                </GridLayout>
+
+                <GridLayout col="1" rows="auto, *" class="bottom-navigation-item"
+                    [class.selected]="isComponentSelected('/addchat')" (tap)="onNavItemTap('/addchat')">
+                    <Label row="0" [text]="newchatIcon" class="ico icon"></Label>
+                    <Label row="1" text="New Chat" class="label"></Label>
+                </GridLayout>
+           
+        </GridLayout>
+    </GridLayout>
+</StackLayout>

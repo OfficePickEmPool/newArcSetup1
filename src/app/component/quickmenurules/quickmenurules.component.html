@@ -1,0 +1,28 @@
+<Letsplaydashboard>
+    <StackLayout>
+        <Label text="Quick Menus" class="headersub-msg"></Label>
+
+        <GridLayout style="margin-top: 40px; width:90%;">
+            <StackLayout>
+                <StackLayout style="margin-bottom: 20px" *ngFor="let rule of data">
+                    <GridLayout class="c-grid-heading" rows="*" columns="*,auto">
+                        <Label row="0" col="0" horizontalAlignment="left"
+                            [text]="rule.category" (tap)="clicked(rule)"
+                            class="accordation-heading" textWrap="true"></Label>
+                        <Label row="0" col="1" horizontalAlignment="right"
+                            [text]="clickedArray.includes(rule) ? '-' : '+'"
+                            class="accordation-heading2" (tap)="clicked(rule)"></Label>
+                    </GridLayout>
+                    <StackLayout class="accordation-content">
+                        <!-- <Label [visibility]="clickedArray.includes(rule) ? 'visible' : 'collapsed'"
+                            [text]="rule.categorydetails " textWrap="true"></Label> -->
+                        <HtmlView [visibility]="clickedArray.includes(rule) ? 'visible' : 'collapsed'"
+                            textWrap="true" [html]="rule.categorydetails"
+                            style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; width:90%; background-color:transparent; margin-top:10px;"></HtmlView>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+        </GridLayout>
+
+    </StackLayout>
+</Letsplaydashboard>

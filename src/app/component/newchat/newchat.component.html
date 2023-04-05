@@ -1,0 +1,133 @@
+<Chatdashboard>
+    <FlexboxLayout flexDirection="column" justifyContent="space-between"
+        height="100%">
+
+        <GridLayout rows="auto,*">
+            <GridLayout row="0" columns="*,40,40" class="headersub-msg">
+                <Label col="0" [text]="(currentChatDetails.FullUserName.indexOf('@') > 0) ? (currentChatDetails.FullUserName.split('@')[1]) : (currentChatDetails.FullUserName)"></Label>
+                <Label col="1" [text]="deleteIcon" style="margin:0px,10px;"
+                    [class]="(selectedusercount > 0) ? 'ico' : 'ico deleteIconDefaultColor'"
+                    [isEnabled]="true" (tap)="onDeleteItemTap()" [visibility]="(showDeleteIcon > 0) ? 'visible' : 'collapse'"></Label>
+                <Label col="2" [text]="expand" style="margin:0px,20px;" class="ico"
+                    (tap)="onItemTap()"></Label>
+            </GridLayout>
+
+            <ActivityIndicator class="indicatorColor" height="100px" width="100px"
+                rowspan="2" [busy]="processing"></ActivityIndicator>
+
+            <RadListView [isEnabled]="!processing" class="input" (swipe)="onItemSwipe($event)"
+                row="1" [items]="realChats" separatorColor="transparent"
+                backgroundColor="transparent" #lv [selectionBehavior]="checked"
+                [multipleSelection]="(checked == 'Press') ? 'true' : 'false'"
+                (itemSelected)="onItemSelected($event)" (itemDeselected)="onItemDeselected($event)">
+
+                <ng-template let-chat="item" let-i="index">
+                    <StackLayout>
+                        <GridLayout *ngIf="chat.ChatGroupName == ''"
+                            [columns]="(chat.UserMessage.split('@')[0] == currentUserName) ? '*,auto' : 'auto,*'">
+                            <GridLayout rows="auto,auto,auto" [class]="(chat.UserMessage.split('@')[0] == currentUserName)? 'chatgridright': 'chatgridleft'"
+                                [col]="(chat.UserMessage.split('@')[0] == currentUserName) ? 1: 0"
+                                [style]="(checked == 'Press') ? 'margin-left:130px;' : 'margin-left:0px;' ">
+                                <Label row="0" [text]="(chat.FullUserName.indexOf('@') > 0) ?(chat.FullUserName.split('@')[0]) : (chat.FullUserName)"
+                                    [class]="(chat.UserMessage.split('@')[0] == currentUserName)? 'chatgnammeright': 'chatgnammeleft'"
+                                    [horizontalAlignment]="(chat.UserMessage.split('@')[0] == currentUserName) ? 'right': 'left'"
+                                    textWrap="true"></Label>
+                                <Label row="1" [text]="chat.ChatMessage"
+                                    [class]="(chat.UserMessage.split('@')[0] == currentUserName) ? 'chatmsgright': 'chatmsgleft'"
+                                    textWrap="true" [horizontalAlignment]="(chat.UserMessage.split('@')[0] == currentUserName) ? 'right': 'left'">
+                                </Label>
+                                <Label row="2" [text]="chat.ChatDateTime | date :'EEEE MM/dd/yyyy | h:mm a'"
+                                    [class]="(chat.UserMessage.split('@')[0] == currentUserName) ? 'chatdateright': 'chatdateleft'"
+                                    [horizontalAlignment]="(chat.UserMessage.split('@')[0] == currentUserName) ? 'right': 'left'"
+                                    textWrap="true"></Label>
+                            </GridLayout>
+                            <GridLayout [col]="(chat.UserMessage.split('@')[0] == currentUserName) ? 0: 1">
+                            </GridLayout>
+                        </GridLayout>
+                        <!-- for group -->
+                        <GridLayout *ngIf="chat.ChatGroupName != ''"
+                            [columns]="(chat.UserMessage.split('@')[0] == currentUserName) ? '*,auto' : 'auto,*'"
+                            [style]="(checked == 'Press') ? 'margin-left:130px;' : 'margin-left:0px;' ">
+                            <GridLayout rows="auto,auto,auto" [class]="(chat.UserMessage.split('@')[0] == currentUserName)? 'chatgridright': 'chatgridleft'"
+                                [col]="(chat.UserMessage.split('@')[0] == currentUserName) ? 1: 0">
+
+                                <Label row="0" [text]="(chat.FullUserName.split('@')[0])"
+                                    [class]="(chat.UserMessage.split('@')[0] == currentUserName)? 'chatgnammeright': 'chatgnammeleft'"
+                                    [horizontalAlignment]="(chat.UserMessage.split('@')[0] == currentUserName) ? 'right': 'left'"
+                                    textWrap="true"></Label>
+
+                                <Label row="1" [text]="chat.ChatMessage"
+                                    [class]="(chat.UserMessage.split('@')[0] == currentUserName) ? 'chatmsgright': 'chatmsgleft'"
+                                    textWrap="true" [horizontalAlignment]="(chat.UserMessage.split('@')[0] == currentUserName) ? 'right': 'left'"></Label>
+                                <Label row="2" [text]="chat.ChatDateTime | date :'EEEE MM/dd/yyyy | h:mm a'"
+                                    [class]="(chat.UserMessage.split('@')[0] == currentUserName) ? 'chatdateright': 'chatdateleft'"
+                                    [horizontalAlignment]="(chat.UserMessage.split('@')[0] == currentUserName) ? 'right': 'left'"
+                                    textWrap="true"></Label>
+                            </GridLayout>
+                            <GridLayout [col]="(chat.UserMessage.split('@')[0] == currentUserName) ? 0: 1">
+                            </GridLayout>
+                        </GridLayout>
+                    </StackLayout>
+                </ng-template>
+            </RadListView>
+
+        </GridLayout>
+
+        <StackLayout width="100%" visibility="visible" orientation="horizontal"
+            height="200">
+            <GridLayout row="1" rows="*,*">
+                <Label row="0" [text]="pullupIcon+ ' Pull Up to Refresh'"
+                    class="ico c-labelpullup">
+                </Label>
+                <GridLayout row="1" [isEnabled]="!processing" columns="*,auto"
+                    class="bottompanel input" style="background-color:#ccc">
+
+                    <TextView col="0" [isEnabled]="!processing" hint="Type a message"
+                        [(ngModel)]="textMessage" class="txtsend">
+                    </TextView>
+
+                    <Label col="1" [isEnabled]="!processing" [text]="sendIcon"
+                        class="ico icon  btnsend " (tap)="btnsendMessage()"></Label>
+                </GridLayout>
+            </GridLayout>
+        </StackLayout>
+    </FlexboxLayout>
+</Chatdashboard>
+<!-- <GridLayout rows="*,70">
+       
+        <StackLayout row="0">
+            <Label text="Sumit Parmar" class="headersub-msg"></Label>
+            <ListView [items]="realLeague" style="height:{{screenHeight-850}}px; "
+                separatorColor="transparent" backgroundColor="transparent">
+                <ng-template let-league="item" let-i="index">
+                    <FlexboxLayout flexDirection="row">
+                        <GridLayout [columns]="(i%2) == 1 ? '*,auto': 'auto,*'">
+                            <GridLayout rows="auto,auto,auto" [class]="(i%2) == 1 ? 'chatgridright': 'chatgridleft'"
+                                [col]="(i%2) == 1 ? 1: 0">
+                                <Label row="0" [text]="league.groupname"
+                                    [class]="(i%2) == 1 ? 'chatgnammeright': 'chatgnammeleft'"
+                                    [horizontalAlignment]="(i%2) == 1 ? 'right': 'left'"
+                                    textWrap="true"></Label>
+                                <Label row="1" [text]="league.name" [class]="(i%2) == 1 ? 'chatmsgright': 'chatmsgleft'"
+                                    textWrap="true" [horizontalAlignment]="(i%2) == 1 ? 'right': 'left'"></Label>
+                                <Label row="2" [text]="league.date" [class]="(i%2) == 1 ? 'chatdateright': 'chatdateleft'"
+                                    [horizontalAlignment]="(i%2) == 1 ? 'right': 'left'"
+                                    textWrap="true"></Label>
+                            </GridLayout>
+                            <GridLayout [col]="(i%2) == 1 ? 0: 1">>
+                            </GridLayout>
+                        </GridLayout>
+                    </FlexboxLayout>
+                </ng-template>
+            </ListView>
+        </StackLayout>
+      
+        
+            <GridLayout row="1" columns="*,auto" class="bottompanel" height="70">
+                <TextView col="0" hint="Type a message" class="txtsend">
+                </TextView>
+                
+    <Label col="1" [text]="sendIcon" class="ico icon  btnsend" (tap)="onButtonTap()"></Label>
+    </GridLayout>
+
+    </GridLayout> -->

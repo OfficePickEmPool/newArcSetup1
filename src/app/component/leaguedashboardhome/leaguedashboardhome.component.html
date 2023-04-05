@@ -1,0 +1,26 @@
+<Leaguedashboard>
+    <GridLayout rows="*,*,*,*,*,*,*,*" columns="*">
+        <Label row="0" text="League Organizer Dashboard" class="headersub-msg"></Label>
+
+        <Label row="1" [text]="insIcon+ ' Instructions'" [nsRouterLink]="['/leagueinstructions']"
+            class="ico lblInstructions borderInstructions"></Label>
+
+        <Label row="2" [text]="scheduleIcon+ ' Edit Schedules'"
+            [nsRouterLink]="['/schedules']" class="ico lblscheduleIcon borderscheduleIcon"></Label>
+
+        <Label row="3" [text]="scoreIcon+ ' Edit Scores'" [nsRouterLink]="['/scores']"
+            class="ico lblScores borderScores"></Label>
+
+        <Label row="4" [text]="noteIcon+ ' Edit Notes'" class="ico lblNotes borderNotes"
+            [nsRouterLink]="['/notes']"></Label>
+
+        <Label row="5" [text]="viewIcon+ ' View Player(s)'" class="ico lblPlayer borderPlayer"
+            [nsRouterLink]="['/viewplayers']"></Label>
+
+        <Label row="6" [text]="viewruleIcon+ ' View Rules'" [nsRouterLink]="['/viewrulesleague']"
+            class="ico lblRules borderRules"></Label>
+
+        <Label row="7" [text]="inviteIcon+ ' Invite Friends'" [nsRouterLink]="['/invitefriend']"
+            class="ico lblFriends borderFriends" style="margin-bottom:50px;"></Label>
+    </GridLayout>
+</Leaguedashboard>

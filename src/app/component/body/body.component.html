@@ -1,0 +1,48 @@
+<ActionBar title="Office Pick Em Pool" class="sideLabel3">
+    <NavigationButton text="Back" android.systemIcon="ic_menu_back"
+        [visibility]="IsVisibleBackButton" (tap)="goback()"></NavigationButton>
+
+    <!-- <ActionItem ios.systemIcon="2" android.systemIcon="ic_menu_add"
+        ios.position="right" (tap)="openDrawer()" ></ActionItem> -->
+    <ActionItem ios.position="right" (tap)="openDrawer()">
+        <Label [class]="isAndroid()?'c-menu-toggle2': 'c-menu-toggle'"></Label>
+    </ActionItem>
+
+</ActionBar>
+<RadSideDrawer [drawerLocation]="currentLocation" tkExampleTitle
+    tkToggleNavButton>
+
+    <GridLayout tkDrawerContent rows="auto, *" class="sideStackLayout">
+        <StackLayout class="sideTitleStackLayout">
+            <Image src="~/Images/logo.png" class="nav-logo"></Image>
+            <Label text="Office Pick Em Pool" class="logo-lable"></Label>
+            </StackLayout>
+            <ScrollView row="1">
+                <StackLayout class="sideStackLayout">
+                    <Label [text]="'Welcome, '+userName" class="sideLabel2"></Label>
+                    <Label text="App Home" [nsRouterLink]="['/home']" class="sideLabel border"></Label>
+                    <Label text="Live Chat" [nsRouterLink]="['/chathome']"
+                        class="sideLabel border"></Label>
+                    <Label text="Invite Friends" [nsRouterLink]="['/invitefriend']"
+                        class="sideLabel border" *ngIf="isManageLeageDashBord != null && !isManageLeageDashBord"></Label>
+                    <Label text="Invite New Players" [nsRouterLink]="['/invitenewplayer']"
+                        class="sideLabel border" *ngIf="isManageLeageDashBord != null && isManageLeageDashBord"></Label>
+                    <Label text="Contact League Admin" [nsRouterLink]="['/contactleagueadmin']"
+                        class="sideLabel border" *ngIf="isManageLeageDashBord != null && !isManageLeageDashBord"></Label>
+                    <Label text="Contact Office Pick Em Pool" [nsRouterLink]="['/contactofficepickempool']"
+                        class="sideLabel border" *ngIf="isManageLeageDashBord != null"></Label>
+                    <Label text="Change User Information" class="sideLabel border"
+                        [nsRouterLink]="['/register']"></Label>
+                    <Label text="Logout" class="sideLabel border" (tap)="logout()"></Label>
+                </StackLayout>
+            </ScrollView>
+    </GridLayout>
+
+    <StackLayout tkMainContent class="common-background" iosOverflowSafeArea="false">
+        <ScrollView orientation="vertical">
+            <ng-content>
+            </ng-content>
+        </ScrollView>
+    </StackLayout>
+
+</RadSideDrawer>

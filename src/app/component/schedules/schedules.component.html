@@ -1,0 +1,51 @@
+<Leaguedashboard>
+
+    <GridLayout rows="*,*,*" columns="*">
+        <GridLayout row="0" col="0" rows="*" columns="*,auto,auto" class="headersub-msg">
+            <Label row="0" col="0" text="  Schedules" horizontalAlignment="Left"></Label>
+            <Label row="0" col="1" [text]="saveIcon+'  '" [class]="isDisableSaveBtn ? 'ico ico-save-disable' : 'ico'"
+                (tap)="saveSelectedGameForWeek()" [isEnabled]="!isBusy"
+                [isUserInteractionEnabled]="!isBusy"></Label>
+            <Label row="0" col="2" [text]="exitIcon+'  '" class="ico"
+                [nsRouterLink]="['/leaguedashboardhome']" [isEnabled]="!isBusy"
+                [isUserInteractionEnabled]="!isBusy"> </Label>
+        </GridLayout>
+        <Label row="1" col="0" [text]="selectedWeekName" hint="Select Week"
+            [class]="device=='Android' ? 'c-text c-lbl-android' : 'c-text c-lbl-ios'"
+            (tap)="action()" [isEnabled]="!isBusy" [isUserInteractionEnabled]="!isBusy"></Label>
+
+
+        <StackLayout class="input" row="2" col="0" style="margin-top:30px;"
+            [isEnabled]="!isBusy" [isUserInteractionEnabled]="!isBusy">
+            <StackLayout style="margin: 20px 0px" *ngFor="let item of leagueGamesViewModel.leagueGames; let i = index">
+                <GridLayout class="c-grid-heading" rows="*,*,*,*,*,*" columns="*,auto"
+                    class="c-schedules c-border" (tap)="selectedGame(item,!leagueGamesViewModel.isChecked[i],i)">
+                    <Label row="0" col="0" text="G{{i+1}}"
+                        horizontalAlignment="center"></Label>
+                    <Label row="1" col="0" text="{{item.Team1.Name}}"
+                        horizontalAlignment="center"></Label>
+                    <Label row="2" col="0" [text]="item.NoHomeTeam ? 'vs' : '@'"
+                        horizontalAlignment="center"></Label>
+                    <Label row="3" col="0" text="{{item.Team2.Name}}"
+                        horizontalAlignment="center"></Label>
+                    <Label row="4" col="0" [text]="isGameStarted(item.StartDateTime)==true ? 'Game Started': ''"
+                        horizontalAlignment="center"></Label>
+                    <Label row="5" col="0" text="{{item.StartDateTime | date :'EEEE MM/dd | h:mm a'}}"
+                        horizontalAlignment="center"></Label>
+                    <Image rowspan="6" col="1" [src]="!leagueGamesViewModel.isGameStarted[i] ? leagueGamesViewModel.isChecked[i] ? '~/Images/unchecked.png' : '~/Images/checked.png' : leagueGamesViewModel.isChecked[i] ? '~/Images/d-un-chek.png' : '~/Images/d-chek2.png'"
+                        class="icon-selected first-line" horizontalAlignment="left"></Image>
+                </GridLayout>
+
+            </StackLayout>
+            <ActivityIndicator [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
+        </StackLayout>
+
+
+        <!-- <Button row="3" col="0" text="Save Changes" class="c-login-btn border-c-login-btn"
+            style="width:40%; margin-bottom:50px;"></Button>
+        <Button row="3" col="1" text="Exit" class="c-exit-btn border-c-exit-btn"
+            style="width:40%; margin-bottom:50px;" [nsRouterLink]="['/leaguedashboardhome']"></Button> -->
+
+    </GridLayout>
+
+</Leaguedashboard>

@@ -1,0 +1,13 @@
+<Letsplaydashboard>
+    <GridLayout rows="*,*,*,*" columns="*">
+        <Label row="0" text="Updates/Notices" class="headersub-msg"></Label>
+        <!-- <TextField text="" hint="Email" class="c-text"></TextField> -->
+        <TextView row="1" [(ngModel)]="allNotice" editable="false" class="c-text-view button"
+            [isEnabled]="!isBusy">
+
+        </TextView>
+        <ActivityIndicator [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
+        <Button row="2" text="Exit" class="c-exit-btn border-c-exit-btn button"
+            [nsRouterLink]="['/letsplaydashboardhome']" [isEnabled]="!isBusy"></Button>
+    </GridLayout>
+</Letsplaydashboard>

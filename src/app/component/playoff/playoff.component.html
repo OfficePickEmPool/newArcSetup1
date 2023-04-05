@@ -1,0 +1,154 @@
+<Letsplaydashboard>
+    <GridLayout rows="*,*,*">
+        <Label row="0" text="Playoff" class="headersub-msg"></Label>
+        <Button row="1" text="Refresh" class="borderletsplay lblMessageletsPlay"
+            (tap)="loadTournament('CL')"></Button>
+        <ActivityIndicator row="2" [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
+        <ScrollView row="2" orientation="horizontal">
+            <StackLayout>
+                <GridLayout rows="*,*,*,*,*" columns="auto,50,auto,50,auto,50,auto,50"
+                    *ngFor="let c of tournamentData.conferences; let k = index"
+                    width="auto" [isEnabled]="!isBusy"
+                    [isUserInteractionEnabled]="!isBusy" class="input">
+                    <Label text="{{c.conferenceName}}" row="0" colspan="8"
+                        *ngIf="tournamentData.doubleConference" class="c-graph-head"></Label>
+                    <GridLayout *ngFor="let item of c.matches; let i = index"
+                        row="{{tournamentData.doubleConference ? 1 : 0}}" col="{{2*i}}"
+                        rows="*,*,*,*,*" columns="*">
+                        <Label row="0" text="Round {{i+1}}" class="c-heading-playoff"></Label>
+                        <GridLayout *ngFor="let m of item; let j = index" row="{{item.length == 2 && i == 0 ? (4*j)+1 : item.length > 2 ? j+1 : j+3 }}"
+                            rows="*,*,*" [columns]="(i+1) == 4 ? 'auto,33%,33%,33%': 'auto,33%,33%'"
+                            class="c-grid-head-green" (tap)="showDetails(j,m)">
+                            <Label row="0" col="0" text="{{findTeamMemberDetails(m.team1.id).name}}"
+                                *ngIf="!isEditable" horizontalAlignment="Left"
+                                (doubleTap)="editableTeam()" textWrap="true"
+                                style="padding:0px 10px;" (loaded)="onLabelLoaded($event)"></Label>
+                            <TextField row="0" col="0" text="{{findTeamMemberDetails(m.team1.id).name}}"
+                                *ngIf="isEditable" (blur)="endEditable()"
+                                horizontalAlignment="Left" textWrap="true"
+                                style="padding:0px 10px;" (loaded)="onLabelLoaded($event)">
+                            </TextField>
+                            <TextField row="0" text="{{m.team1.score}}" col="1"
+                                *ngIf="isEditable" class="c-score" (blur)="endEditable()"
+                                horizontalAlignment="center" (loaded)="onLabelLoaded($event)"></TextField>
+                            <Label row="0" col="2" text="{{m.team1.score == 0 ? 'L' : 'W'}}"
+                                class="{{ m.team1.score == 0 ? 'c-lost' : 'c-win'}}"
+                                horizontalAlignment="center" (loaded)="onLabelLoaded($event)"></Label>
+                            <Label row="0" col="3" [text]="m.team1.score == 0 ? '2' :'1'"
+                                [class]="m.team1.score == 0 ? 'c-lost-second' :'c-lost-first'"
+                                horizontalAlignment="center" *ngIf="(i+1) == 4"
+                                (loaded)="onLabelLoaded($event)"></Label>
+
+                            <Label row="1" colspan="{{(i+1) == 4 ? 4 : 3}}"
+                                text="" class="c-sep"></Label>
+
+                            <Label row="2" col="0" text="{{findTeamMemberDetails(m.team2.id).name}}"
+                                *ngIf="!isEditable" horizontalAlignment="Left"
+                                (doubleTap)="editableTeam()" textWrap="true"
+                                style="padding:0px 10px;" (loaded)="onLabelLoaded($event)"></Label>
+                            <TextField row="2" col="0" text="{{findTeamMemberDetails(m.team2.id).name}}"
+                                *ngIf="isEditable" (blur)="endEditable()"
+                                horizontalAlignment="Left" textWrap="true"
+                                style="padding:0px 10px;" (loaded)="onLabelLoaded($event)">
+                            </TextField>
+                            <TextField row="2" text="{{m.team2.score}}" col="1"
+                                *ngIf="isEditable" class="c-score" (blur)="endEditable()"
+                                horizontalAlignment="center" (loaded)="onLabelLoaded($event)"></TextField>
+                            <Label row="2" col="2" text="{{m.team2.score == 0 ? 'L' : 'W'}}"
+                                class="{{ m.team2.score == 0 ? 'c-lost' : 'c-win'}}"
+                                horizontalAlignment="center" (loaded)="onLabelLoaded($event)">
+                            </Label>
+                            <Label row="2" col="3" [text]="m.team2.score == 0 ? '2' :'1'"
+                                [class]="m.team2.score == 0 ? 'c-lost-second' :'c-lost-first'"
+                                horizontalAlignment="center" *ngIf="(i+1) == 4"
+                                (loaded)="onLabelLoaded($event)"></Label>
+                        </GridLayout>
+                        <GridLayout row="{{item.length == 2 && i == 0 ? 2 : 1 }}"
+                            *ngIf="item.length <= 2" visibility="hidden" rows="*,*,*"
+                            columns="auto,33%,33%" width="100%" class="c-grid-head-green">
+                            <Label row="0" col="0" text="Lanceebert"
+                                horizontalAlignment="Left" textWrap="true"
+                                style="padding:0px 10px;"></Label>
+                            <TextField row="0" hint="225" col="1" class="c-score"
+                                horizontalAlignment="center"></TextField>
+                            <Label row="0" col="2" text="W" class="c-win"
+                                horizontalAlignment="center"></Label>
+
+                            <Label row="1" colspan="3" text="" class="c-sep"></Label>
+
+                            <Label row="2" col="0" text="Bobdowns"
+                                horizontalAlignment="Left" textWrap="true"
+                                style="padding:0px 10px;"></Label>
+                            <TextField row="2" hint="25" col="1" class="c-score"
+                                horizontalAlignment="center"></TextField>
+                            <Label row="2" col="2" text="L" class="c-lost"
+                                horizontalAlignment="center"></Label>
+                        </GridLayout>
+                        <GridLayout row="{{item.length == 2 && i == 0 ? 3 : item.length < 2 ? 2 : 4 }}"
+                            *ngIf="item.length <= 2" visibility="hidden" rows="*,*,*"
+                            columns="auto,33%,33%" width="100%" class="c-grid-head-green">
+                            <Label row="0" col="0" text="Lanceebert"
+                                horizontalAlignment="Left" textWrap="true"
+                                style="padding:0px 10px;"></Label>
+                            <TextField row="0" hint="225" col="1" class="c-score"
+                                horizontalAlignment="center"></TextField>
+                            <Label row="0" col="2" text="W" class="c-win"
+                                horizontalAlignment="center"></Label>
+
+                            <Label row="1" colspan="3" text="" class="c-sep"></Label>
+
+                            <Label row="2" col="0" text="Bobdowns"
+                                horizontalAlignment="Left" textWrap="true"
+                                style="padding:0px 10px;"></Label>
+                            <TextField row="2" hint="25" col="1" class="c-score"
+                                horizontalAlignment="center"></TextField>
+                            <Label row="2" col="2" text="L" class="c-lost"
+                                horizontalAlignment="center"></Label>
+                        </GridLayout>
+
+                    </GridLayout>
+
+                    <GridLayout row="{{tournamentData.doubleConference ? 1 : 0}}"
+                        col="1" rows="*,*,*,*,*" columns="*">
+
+                        <Label row="0" class="c-heading-playoff" text=" "></Label>
+                        <Image row="1" class="c-grid-head-green-line" src="~/Images/h-line-grey.png"></Image>
+                        <Image row="2" class="c-grid-head-green-line" src="~/Images/h-line-grey.png"
+                            *ngIf="c.matches[0].length > 2"></Image>
+                        <Image row="3" class="c-grid-head-green-line" src="~/Images/h-line-grey.png"
+                            *ngIf="c.matches[0].length > 2"></Image>
+                        <Label row="2" class="c-grid-head-green-line" *ngIf="c.matches[0].length <= 2"
+                            text=" "></Label>
+                        <Label row="3" class="c-grid-head-green-line" *ngIf="c.matches[0].length <=2"
+                            text=" "></Label>
+                        <Image row="4" class="c-grid-head-green-line" src="~/Images/h-line-grey.png"></Image>
+
+
+                    </GridLayout>
+                    <GridLayout row="{{tournamentData.doubleConference ? 1 : 0}}"
+                        col="3" rows="*,*,*,*,*" columns="*">
+                        <Label row="0" class="c-heading-playoff" text=" "></Label>
+                        <Image row="1" class="c-grid-head-green-line2" src="~/Images/line-l-grey.png"
+                            style="margin-top:90px"></Image>
+                        <Label row="2" class="c-grid-head-green-line" text=" ">
+                        </Label>
+                        <Image row="3" class="c-grid-head-green-line2" src="~/Images/line-j-grey.png"></Image>
+                    </GridLayout>
+                    <GridLayout row="{{tournamentData.doubleConference ? 1 : 0}}"
+                        col="5" rows="*,*,*,*,*" columns="*">
+                        <Label row="0" class="c-heading-playoff" text=" "></Label>
+                        <Label row="1" class="c-grid-head-green-line" text=" "></Label>
+                        <Image row="2" class="c-grid-head-green-line" src="~/Images/line-l-grey.png"
+                            style="margin-top:90px"></Image>
+                        <Label row="3" class="c-grid-head-green-line" text=" "></Label>
+                        <Label row="4" class="c-grid-head-green-line" text=" "></Label>
+
+                    </GridLayout>
+
+
+                </GridLayout>
+
+            </StackLayout>
+        </ScrollView>
+    </GridLayout>
+</Letsplaydashboard>

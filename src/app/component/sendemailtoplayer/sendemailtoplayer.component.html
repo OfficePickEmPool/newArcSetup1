@@ -1,0 +1,26 @@
+<Leaguedashboard>
+    <GridLayout rows="*,*,*,*,*,*,*" columns="*">
+        <Label row="0" text="Send Email To Player" class="headersub-msg"></Label>
+        <TextField editable="false" row="1" [text]="From" hint="From" class="c-text input"
+            [isEnabled]="!isBusy"></TextField>
+
+        <TextField editable="false" row="2" [text]="To" hint="To" class="c-text input"
+            [isEnabled]="!isBusy"></TextField>
+
+
+        <TextField [(ngModel)]="Subject" row="3" text="" required hint="Subject"
+            class="c-text input" (textChange)="somethingChangedOnSubject($event)"
+            #element #elementModel="ngModel" [isEnabled]="!isBusy"></TextField>
+        <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label>
+
+        <TextField [(ngModel)]="Body" row="4" text="" required hint="Body"
+            class="c-text input" (textChange)="somethingChangedOnBody($event)"
+            #element #elementModel="ngModel" [isEnabled]="!isBusy"></TextField>
+        <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label>
+        <ActivityIndicator [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
+        <Button row="5" text="Send" class="c-login-btn border-c-login-btn button"
+            (tap)="onEmailSentToBtnTap()" [isEnabled]="!isBusy && isEnabled"></Button>
+        <Button row="6" text="Exit" class="c-exit-btn border-c-exit-btn button"
+            [nsRouterLink]="['/leaguedashboardhome']" [isEnabled]="!isBusy"></Button>
+    </GridLayout>
+</Leaguedashboard>

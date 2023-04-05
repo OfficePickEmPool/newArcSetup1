@@ -1,0 +1,17 @@
+<Body>
+    <StackLayout>
+        <Label text="Invite A Friend To Join" class="headersub-msg"></Label>
+        <TextField [(ngModel)]="userName" required hint="Name" class="c-text"
+            #element #elementModel="ngModel"></TextField>
+        <!-- <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label> -->
+
+        <TextField [(ngModel)]="userEmail" required hint="Email" class="c-text"
+            #element #elementModel="ngModel"></TextField>
+        <!-- <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label> -->
+
+        <Button text="Send" (tap)="btnInvite()" class="c-login-btn border-c-login-btn button"
+            [isEnabled]="userName != '' && userName != undefined && userEmail != '' && userEmail != undefined"></Button>
+        <Button text="Exit" class="c-exit-btn border-c-exit-btn"
+            [nsRouterLink]="['/home']"></Button>
+    </StackLayout>
+</Body>

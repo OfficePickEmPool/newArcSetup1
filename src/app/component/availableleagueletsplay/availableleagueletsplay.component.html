@@ -1,0 +1,28 @@
+<Body>
+    <StackLayout rows="*,*,*">
+        <Label text="Available Leagues" class="headersub-msg"></Label>
+
+        <SearchBar class="input" row="1" hint="Search League By Name"
+            (textChange)="onTextChanged($event)" [text]="searchPhrase"
+            (clear)="onClear($event)" [isEnabled]="!isBusy"
+            [isUserInteractionEnabled]="!isBusy"></SearchBar>
+
+        <ListView row="2" class="list-group input" [items]="realLeague"
+            (itemTap)="onItemTap($event)" [isEnabled]="!isBusy"
+            [isUserInteractionEnabled]="!isBusy" style="height:{{screenHeight-850}}px; background-color:transperent;">
+            <ng-template let-league="item">
+                <FlexboxLayout flexDirection="row" class="list-group-item"
+                    (tap)="setLeagueDetails(league)" style="background-color:white;">
+                    <Image src="~/Images/cup-icon.png" class="thumb img-circle">
+                    </Image>
+                    <Label [text]="league.Name" class="list-group-item-heading"
+                        (tap)="setLeagueDetails(league)" (loaded)="onLabelLoaded($event)"></Label>
+                </FlexboxLayout>
+            </ng-template>
+        </ListView>
+
+        <ActivityIndicator [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
+        <Button text="Join League" [isEnabled]="!isBusy" (tap)="isValidPlayerSubscription()"
+            class="c-login-btn border-c-login-btn button"></Button>
+    </StackLayout>
+</Body>

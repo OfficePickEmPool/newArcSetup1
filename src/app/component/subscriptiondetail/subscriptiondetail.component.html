@@ -1,0 +1,46 @@
+<Body>
+    <StackLayout>
+        <GridLayout row="*" columns="*,*" class="headersub-msg">
+            <Label row="0" col="0" text="  Subscriptions" horizontalAlignment="Left"></Label>
+            <Label row="0" col="1" [text]="addIcon+'  '" class="ico"
+                horizontalAlignment="Right" [nsRouterLink]="['/subscribe']"
+                [isEnabled]="!isBusy" [isUserInteractionEnabled]="!isBusy"></Label>
+        </GridLayout>
+        <FlexboxLayout flexDirection="row" class="c-grid-heading ">
+            <Label text="Name" class="c-grid-heading list-group-item-heading"
+                style="width: 25%; padding-left:30px;"></Label>
+            <Label text="Purchased on" class="c-grid-heading list-group-item-heading"
+                style="width: 25%"></Label>
+            <Label text="Valid till" class="c-grid-heading list-group-item-heading"
+                style="width: 25%"></Label>
+            <Label text="Amount" class="c-grid-heading list-group-item-heading"
+                style="width: 25%"></Label>
+        </FlexboxLayout>
+        <ListView class="list-group input" [items]="subscriptionList"
+            (itemTap)="onItemTap($event)" [isEnabled]="!isBusy"
+            [isUserInteractionEnabled]="!isBusy" style="height:{{screenHeight-380}}px; background-color:transperent;">
+
+            <ng-template let-subscribe="item">
+                <FlexboxLayout flexDirection="row" class="list-group-item"
+                    style="background-color:white;">
+                    <Label [text]="subscribe.SubscriptionName" textWrap="true"
+                        class="list-group-item-heading c-grid-font"
+                        verticalAlignment="center" style="width: 25%"></Label>
+                    <Label text="{{ subscribe.StartDate | date :'MM/dd/yyyy'}}"
+                        textWrap="true" class="list-group-item-heading c-grid-font"
+                        verticalAlignment="center" style="width: 25%"></Label>
+                    <Label text="{{ subscribe.EndDate | date :'MM/dd/yyyy'}}"
+                        textWrap="true" class="list-group-item-heading c-grid-font"
+                        verticalAlignment="center" style="width: 25%"></Label>
+                    <Label text="${{subscribe.Payment.Amount}}" textWrap="true"
+                        class="list-group-item-heading c-grid-font"
+                        verticalAlignment="center" style="width: 25%"></Label>
+                </FlexboxLayout>
+            </ng-template>
+
+        </ListView>
+        <!-- <Label text="Subscribe with us" class="lblMessagemanageLeagues bordermanageLeagues"
+            [nsRouterLink]="['/subscribe']"></Label> -->
+        <ActivityIndicator [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
+    </StackLayout>
+</Body>

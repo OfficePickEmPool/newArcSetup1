@@ -1,0 +1,143 @@
+<Letsplaydashboard>
+    <GridLayout rows="*,*,*,*,*" [isEnabled]="!isBusy"
+        [isUserInteractionEnabled]="!isBusy" class="input">
+        <Label row="0" text="Head To Head" class="headersub-msg"></Label>
+        <Label row="1" col="0" [text]="selectedWeekName" hint="Select Week"
+            [class]="device=='Android' ? 'c-text c-lbl-android' : 'c-text c-lbl-ios'"
+            (tap)="action()" [isEnabled]="!isBusy" [isUserInteractionEnabled]="!isBusy"></Label>
+
+        <GridLayout row="2" rows="3*, *" style="width:90%">
+            <GridLayout row="0" rows="auto" columns="*,*" visibility="{{hideSwipeBtn ? 'hidden' : 'visible'}}">
+                <GridLayout row="0" col="0" verticalAlignment="bottom" class="m-t-10">
+                    <Image src="~/Images/prev-btn.png" class="c-nav-button input"
+                        horizontalAlignment="Right" (tap)="skipIntro(1)"
+                        [isEnabled]="!isBusy" [isUserInteractionEnabled]="!isBusy"></Image>
+                </GridLayout>
+                <GridLayout row="0" col="1" verticalAlignment="bottom" class="m-t-10">
+                    <Image src="~/Images/next-btn.png" class="c-nav-button input"
+                        horizontalAlignment="Left" (tap)="skipIntro(2)"
+                        [isEnabled]="!isBusy" [isUserInteractionEnabled]="!isBusy"></Image>
+                </GridLayout>
+
+            </GridLayout>
+
+            <GridLayout row="1" class="input" rows="*" #gridContain (swipe)="onSwipe($event)"
+                [isEnabled]="!isBusy" [isUserInteractionEnabled]="!isBusy">
+                <GridLayout row="0" rows="*, 2*" col="0" *ngFor="let item of completedGames; let i = index"
+                    visibility="{{currentSlideNum == i || prevSlideNum == i ? 'visible' : 'hidden'}}">
+                    <GridLayout rows="*,*" width="100%" row="0" style="margin-top:10px;">
+                        <Label row="0" text="Game {{i+1}}" class="lblRules borderRules"></Label>
+                        <Label row="1" colSpan="2" class="list-separator"></Label>
+                    </GridLayout>
+                    <GridLayout class="carousel-item-circle" row="1" columns="*,30,*"
+                        horizontalAlignment="center" verticalAlignment="center">
+                        <GridLayout rows="*,*" col="0">
+                            <GridLayout rows="*,*,*,*" class="c-grid-bg">
+                                <Label row="0" text="FAV" class="c-lbl-fav-left"
+                                    horizontalAlignment="Left" visibility="{{item.LeagueGame.Game.Team1.Id == item.LeagueGame.Game.FavouriteTeamId ? 'visible' : 'hidden'}}"
+                                    verticalAlignment="Top"></Label>
+                                <Image row="1" src="~/Images/red-halmet.png"
+                                    class="c-halmet"></Image>
+                                <Label row="2" text="{{item.LeagueGame.Game.Team1.Name}}"
+                                    class="c-lable-name" textWrap="true"
+                                    (loaded)="onLabelLoaded($event)"></Label>
+                                <Label row="3" text="{{item.LeagueGame.Team1Score}}"
+                                    [class]="item.LeagueGame.IsTeam1Winner == true ? 'c-lable-score-high' : 'c-lable-score-low'"
+                                    style="vertical-align: middle;" (loaded)="onLabelLoaded($event)"></Label>
+                            </GridLayout>
+                            <GridLayout row="1">
+                                <StackLayout *ngIf="leftPickedTeam[i].BothPicked">
+                                    <Label text="My Pick - 0" class="c-lable-mypick"
+                                        *ngIf="item.MyPick== undefined||item.MyPick == null||item.MyPick.Score==null || item.MyPick.Picked.Id==null"
+                                        style="vertical-align: middle;"></Label>
+                                    <Label text="My Pick-{{item.MyPick.Score}}"
+                                        class="c-lable-mypick" *ngIf="item.MyPick!= undefined&&item.MyPick != null&&item.MyPick.Score != null"
+                                        style="vertical-align: middle;"></Label>
+                                    <Label text="Opp Pick - 0" *ngIf="item.OppPick== undefined||item.OppPick == null||(item.OppPick.Score==null && isGameStarted(item.LeagueGame.Game.StartDateTime))||item.OppPick.Picked.Id==null"
+                                        class="c-lable-opppick"></Label>
+                                    <Label text="Opp Pick-{{item.OppPick.Score}}"
+                                        *ngIf="item.OppPick!= undefined&&item.OppPick != null&&item.OppPick.Score!=null && isGameStarted(item.LeagueGame.Game.StartDateTime)"
+                                        class="c-lable-opppick"></Label>
+                                </StackLayout>
+                                <StackLayout *ngIf="leftPickedTeam[i].MyPicked">
+                                    <Label text="My Pick - 0" class="c-lable-mypick"
+                                        *ngIf="item.MyPick== undefined||item.MyPick == null||item.MyPick.Score==null || item.MyPick.Picked.Id==null"
+                                        style="vertical-align: middle;"></Label>
+                                    <Label text="My Pick-{{item.MyPick.Score}}"
+                                        class="c-lable-mypick" *ngIf="item.MyPick!= undefined&&item.MyPick != null&&item.MyPick.Score != null"
+                                        style="vertical-align: middle;"></Label>
+                                </StackLayout>
+                                <StackLayout *ngIf="leftPickedTeam[i].OppPicked">
+                                    <Label text="Opp Pick - 0" *ngIf="item.OppPick== undefined||item.OppPick == null||(item.OppPick.Score==null && isGameStarted(item.LeagueGame.Game.StartDateTime))||item.OppPick.Picked.Id==null"
+                                        class="c-lable-opppick"></Label>
+                                    <Label text="Opp Pick-{{item.OppPick.Score}}"
+                                        *ngIf="item.OppPick!= undefined&&item.OppPick != null&&item.OppPick.Score!=null && isGameStarted(item.LeagueGame.Game.StartDateTime)"
+                                        class="c-lable-opppick"></Label>
+                                </StackLayout>
+                            </GridLayout>
+                        </GridLayout>
+                        <GridLayout col="1" verticalAlignment="middle">
+                            <Image src="~/Images/vs.png"></Image>
+                        </GridLayout>
+                        <GridLayout rows="*,*" col="2">
+                            <GridLayout rows="*,*,*,*" class="c-grid-bg">
+                                <Label row="0" text="FAV" class="c-lbl-fav-right"
+                                    visibility="{{item.LeagueGame.Game.Team2.Id == item.LeagueGame.Game.FavouriteTeamId ? 'visible' : 'hidden'}}"
+                                    horizontalAlignment="Right"
+                                    verticalAlignment="Top"></Label>
+                                <Image row="1" src="~/Images/blue-halmet.png"
+                                    class="c-halmet"></Image>
+                                <Label row="2" text="{{item.LeagueGame.Game.Team2.Name}}"
+                                    class="c-lable-name" textWrap="true"
+                                    (loaded)="onLabelLoaded($event)"></Label>
+                                <Label row="3" [class]="item.LeagueGame.IsTeam2Winner == true ? 'c-lable-score-high' : 'c-lable-score-low'"
+                                    text="{{item.LeagueGame.Team2Score}}"
+                                    (loaded)="onLabelLoaded($event)"></Label>
+                            </GridLayout>
+
+                            <GridLayout row="1" rows="*,*">
+                                <StackLayout *ngIf="rightPickedTeam[i].BothPicked">
+                                    <Label text="My Pick - 0" class="c-lable-mypick"
+                                        *ngIf="item.MyPick== undefined||item.MyPick == null||item.MyPick.Score==null || item.MyPick.Picked.Id==null"
+                                        style="vertical-align: middle;"></Label>
+                                    <Label text="My Pick-{{item.MyPick.Score}}"
+                                        class="c-lable-mypick" *ngIf="item.MyPick!= undefined&&item.MyPick != null&&item.MyPick.Score != null"
+                                        style="vertical-align: middle;"></Label>
+                                    <Label text="Opp Pick - 0" *ngIf="item.OppPick== undefined||item.OppPick == null||(item.OppPick.Score==null && isGameStarted(item.LeagueGame.Game.StartDateTime))||item.OppPick.Picked.Id==null"
+                                        class="c-lable-opppick"></Label>
+                                    <Label text="Opp Pick-{{item.OppPick.Score}}"
+                                        *ngIf="item.OppPick!= undefined&&item.OppPick != null&&item.OppPick.Score!=null && isGameStarted(item.LeagueGame.Game.StartDateTime)"
+                                        class="c-lable-opppick"></Label>
+                                </StackLayout>
+                                <StackLayout *ngIf="rightPickedTeam[i].MyPicked">
+                                    <Label text="My Pick - 0" class="c-lable-mypick"
+                                        *ngIf="item.MyPick== undefined||item.MyPick == null||item.MyPick.Score==null || item.MyPick.Picked.Id==null"
+                                        style="vertical-align: middle;"></Label>
+                                    <Label text="My Pick-{{item.MyPick.Score}}"
+                                        class="c-lable-mypick" *ngIf="item.MyPick!= undefined&&item.MyPick != null&&item.MyPick.Score != null"
+                                        style="vertical-align: middle;"></Label>
+                                </StackLayout>
+                                <StackLayout *ngIf="rightPickedTeam[i].OppPicked">
+                                    <Label text="Opp Pick - 0" *ngIf="item.OppPick== undefined||item.OppPick == null||(item.OppPick.Score==null && isGameStarted(item.LeagueGame.Game.StartDateTime))||item.OppPick.Picked.Id==null"
+                                        class="c-lable-opppick"></Label>
+                                    <Label text="Opp Pick-{{item.OppPick.Score}}"
+                                        *ngIf="item.OppPick!= undefined&&item.OppPick != null&&item.OppPick.Score!=null && isGameStarted(item.LeagueGame.Game.StartDateTime)"
+                                        class="c-lable-opppick"></Label>
+                                </StackLayout>
+                            </GridLayout>
+
+                        </GridLayout>
+                    </GridLayout>
+
+                </GridLayout>
+            </GridLayout>
+
+            <ActivityIndicator [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
+        </GridLayout>
+
+        <Button row="3" text="View Summary" class="c-login-btn border-c-login-btn button"
+            *ngIf="isHeadtoHeadAvailable" [nsRouterLink]="['/headtoheadsummary']"
+            [isEnabled]="!isBusy"></Button>
+    </GridLayout>
+
+</Letsplaydashboard>

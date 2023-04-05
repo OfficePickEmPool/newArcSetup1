@@ -1,0 +1,55 @@
+<Chatdashboard>
+
+    <FlexboxLayout flexDirection="column" justifyContent="space-between"
+        height="100%">
+
+        <GridLayout rows="auto,auto,*">
+            <Label text="Live Chat" row="0" class="headersub-msg"></Label>
+            <SearchBar (textChange)="onTextChanged($event)" (clear)="onClear($event)"
+                class="input" row="1" hint="Search By Name" style="background-color:white;"></SearchBar>
+
+            <ListView row="2" class="list-group" (swipe)="onItemSwipe($event)"
+                [items]="realChats" style="height:{{screenHeight-650}}px; background-color:#f1f1f1;">
+                <ng-template let-chat="item">
+                    <GridLayout columns="40,*,20" class="list-group-item">
+
+                        <Label col="0" [text]="(chat.FullUserName.indexOf('@') >= 0) ?((chat.FullUserName.split('@')[1].indexOf(' ') >= 0) ?(chat.FullUserName.split('@')[1].split(' ')[0].substr(0,1)) + (chat.FullUserName.split('@')[1].split(' ')[1].substr(0,1)):(chat.FullUserName.split('@')[1].split(' ')[0].substr(0,1))) : ((chat.FullUserName.indexOf(' ') > 0) ?(chat.FullUserName.split(' ')[0].substr(0,1)) + (chat.FullUserName.split(' ')[1].substr(0,1)):(chat.FullUserName.split(' ')[0].substr(0,1)))"
+                            class="thumb img-circle imageColor" (loaded)="onLabelLoaded($event)"
+                            (tap)="selectedUserChat(chat)"></Label>
+
+                        <Label col="1" [text]="(chat.FullUserName.indexOf('@') >= 0) ? ((chat.FullUserName.split('@')[1])) : (chat.FullUserName)"
+                            class="list-group-item-heading" (loaded)="onLabelLoaded($event)"
+                            style="margin-left:0px;" (tap)="selectedUserChat(chat)"></Label>
+
+                        <!-- <Label fontSize="22" col="2" [text]="deleteIcon" (tap)="deleteUserChat(chat)"
+                            class="ico"></Label> -->
+                    </GridLayout>
+                </ng-template>
+            </ListView>
+            <ActivityIndicator class="indicatorColor" height="100px" width="100px"
+                rowspan="3" [busy]="processing"></ActivityIndicator>
+            <!-- <ListView row="2" class="list-group" [items]="realChats" style="height:{{screenHeight-650}}px; background-color:#f1f1f1;">
+	            <ng-template let-chat="item">
+	                <FlexboxLayout [visibility]="chat.UserMessage.indexOf('@') >= 0 ? chat.GroupMembers.indexOf(currentUserName) >= 0  ?  'visible' : 'collapsed' : (chat.UserMessage == currentUserName) ? 'collapsed'  :  'visible' "
+	                    flexDirection="row" (tap)="selectedUserChat(chat)" class="list-group-item">
+	
+	                    <Label [text]="(chat.FullUserName.indexOf('@') >= 0) ?((chat.FullUserName.split('@')[1].indexOf(' ') >= 0) ?(chat.FullUserName.split('@')[1].split(' ')[0].substr(0,1)) + (chat.FullUserName.split('@')[1].split(' ')[1].substr(0,1)):(chat.FullUserName.split('@')[1].split(' ')[0].substr(0,1))) : ((chat.FullUserName.indexOf(' ') > 0) ?(chat.FullUserName.split(' ')[0].substr(0,1)) + (chat.FullUserName.split(' ')[1].substr(0,1)):(chat.FullUserName.split(' ')[0].substr(0,1)))"
+	                        class="thumb img-circle imageColor" (loaded)="onLabelLoaded($event)"></Label>
+	
+	                    <Label [text]="(chat.FullUserName.indexOf('@') >= 0) ? ((chat.FullUserName.split('@')[1])) : (chat.FullUserName)"
+	                        class="list-group-item-heading" (loaded)="onLabelLoaded($event)"></Label>
+	                </FlexboxLayout>
+	            </ng-template>
+	        </ListView> -->
+        </GridLayout>
+
+        <StackLayout width="100%" visibility="visible" orientation="horizontal"
+            height="70">
+            <GridLayout>
+                <Label [text]="pulldownIcon+ ' Pull Down to Refresh'" class="ico c-labelpulldown">
+                </Label>
+
+            </GridLayout>
+        </StackLayout>
+    </FlexboxLayout>
+</Chatdashboard>

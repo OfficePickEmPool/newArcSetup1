@@ -1,0 +1,71 @@
+<Letsplaydashboard>
+    <GridLayout rows="*,*,*,*" columns="*,*">
+        <Label row="0" colspan="2" text="Head To Head Summary" class="headersub-msg"></Label>
+        <Label row="1" colspan="2" [text]="selectedWeekName" hint="Select Week"
+            [class]="device=='Android' ? 'c-text-2 c-lbl-android input' : 'c-text-2 c-lbl-ios input'"
+            (tap)="selectWeek()" [isEnabled]="!isBusy"
+            [isUserInteractionEnabled]="!isBusy">
+        </Label>
+        <GridLayout row="2" colspan="2" rows="*,*" columns="*,*" [isEnabled]="!isBusy"
+            [isUserInteractionEnabled]="!isBusy" class="input">
+            <GridLayout row="0" col="0">
+                <StackLayout>
+                    <Label [text]="selectedPlayer1Name" hint="Select Week"
+                        [class]="device=='Android' ? 'c-text c-lbl-android' : 'c-text c-lbl-ios'"
+                        (tap)="selectedPlayer1Label()" [isEnabled]="!isBusy"
+                        [isUserInteractionEnabled]="!isBusy"></Label>
+                    <StackLayout *ngFor="let item of leftLeagueScoreDetails; let i = index"
+                        [isEnabled]="!isBusy" [isUserInteractionEnabled]="!isBusy"
+                        class="input">
+                        <GridLayout *ngIf="leftLeagueScoreDetails.length>0 && item.MyPick != undefined && item.MyPick != null && item.MyPick"
+                            columns="*,60" [class]="item.OppPick && item.MyPick && selectedPlayer1Name==userName && item.MyPick.Score > item.OppPick.Score ? 'c-grid-head-green' :'c-grid-head'">
+                            <Label col="0" text="{{item.MyPick.Picked.Name}}"
+                                class="c-lable-name" textWrap="true"
+                                horizontalAlignment="Left" (loaded)="onLabelLoaded($event)"></Label>
+                            <Label *ngIf="item.MyPick.Score!=null" col="1"
+                                text="{{item.MyPick.Score}}" class="c-lable-count"
+                                horizontalAlignment="Right" (loaded)="onLabelLoaded($event)"></Label>
+                        </GridLayout>
+                    </StackLayout>
+                    <GridLayout columns="*,60" *ngIf="isLeftTotal" [class]="leftTotal > rightTotal ? 'c-grid-head-green' : leftTotal < rightTotal ? 'c-grid-head-red' : 'c-grid-head-orange'">
+                        <Label col="0" text="Total" class="c-lable-name"
+                            textWrap="true" horizontalAlignment="Left"
+                            (loaded)="onLabelLoaded($event)"></Label>
+                        <Label col="1" text="{{leftTotal}}" class="c-lable-count"
+                            horizontalAlignment="Right" (loaded)="onLabelLoaded($event)"></Label>
+                    </GridLayout>
+                </StackLayout>
+
+            </GridLayout>
+
+            <GridLayout row="0" col="1">
+                <StackLayout>
+                    <Label [text]="selectedPlayer2Name" hint="Select Week"
+                        [class]="device=='Android' ? 'c-text c-lbl-android' : 'c-text c-lbl-ios'"
+                        (tap)="selectedPlayer2Label()" [isEnabled]="!isBusy"
+                        [isUserInteractionEnabled]="!isBusy" ></Label>
+                    <StackLayout *ngFor="let item of leftLeagueScoreDetails; let i = index">
+                        <GridLayout *ngIf="leftLeagueScoreDetails.length>0 && item.OppPick != undefined && item.OppPick != null && item.OppPick"
+                            columns="*,60" [class]="item.OppPick && item.MyPick && selectedPlayer1Name==userName && item.MyPick.Score >item.OppPick.Score ? 'c-grid-head-red' :'c-grid-head'">
+                            <Label col="0" text="{{item.OppPick.Picked.Name}}"
+                                class="c-lable-name" textWrap="true"
+                                horizontalAlignment="Left" (loaded)="onLabelLoaded($event)"></Label>
+                            <Label *ngIf="item.OppPick.Score!=null" col="1"
+                                text="{{item.OppPick.Score}}" class="c-lable-count"
+                                horizontalAlignment="Right" (loaded)="onLabelLoaded($event)"></Label>
+                        </GridLayout>
+                    </StackLayout>
+                    <GridLayout columns="*,60" *ngIf="isRightTotal" [class]="leftTotal < rightTotal ? 'c-grid-head-green' : leftTotal > rightTotal ? 'c-grid-head-red' : 'c-grid-head-orange'">
+                        <Label col="0" text="Total" class="c-lable-name"
+                            textWrap="true" horizontalAlignment="Left"
+                            (loaded)="onLabelLoaded($event)"></Label>
+                        <Label col="1" text="{{rightTotal}}" class="c-lable-count"
+                            horizontalAlignment="Right" (loaded)="onLabelLoaded($event)"></Label>
+                    </GridLayout>
+                </StackLayout>
+            </GridLayout>
+        </GridLayout>
+        <ActivityIndicator row="3" colspan="2" [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
+    </GridLayout>
+
+</Letsplaydashboard>

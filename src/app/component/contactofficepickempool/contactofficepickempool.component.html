@@ -1,0 +1,22 @@
+<Body>
+    <GridLayout rows="*,*,*,*,*,*,*" columns="*">
+        <Label row="0" text="Contact Office Pick Em Pool" class="headersub-msg"></Label>
+        <TextField [isEnabled]="!isBusy" row="1" [(ngModel)]="contactFrom"
+            required hint="From" class="c-text input"></TextField>
+        <TextField [isEnabled]="!isBusy" row="2" [(ngModel)]="contactTo"
+            required hint="To" class="c-text input"></TextField>
+        <TextField [isEnabled]="!isBusy" row="3" [(ngModel)]="contactSubject"
+            required hint="Subject" class="c-text input"></TextField>
+
+        <TextField [isEnabled]="!isBusy" row="4" [(ngModel)]="contactMessage"
+            required hint="Message" class="c-text input" #element
+            #elementModel="ngModel"></TextField>
+        <!-- <Label class="validation " [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label> -->
+        <ActivityIndicator [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
+        <Button row="5" text="Send" (tap)="sendOfficePick()" class="c-login-btn border-c-login-btn button"
+            [isEnabled]="!isBusy && contactMessage != '' && contactMessage != undefined && contactSubject != '' && contactSubject != undefined && contactFrom != '' && contactFrom != undefined  && contactTo != '' && contactTo != undefined"></Button>
+
+        <Button row="6" text="Exit" class="c-exit-btn border-c-exit-btn button"
+            [nsRouterLink]="['/home']" [isEnabled]="!isBusy"></Button>
+    </GridLayout>
+</Body>

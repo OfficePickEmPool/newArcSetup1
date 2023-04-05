@@ -1,0 +1,61 @@
+<Body>
+    <StackLayout>
+
+        <Label text="Create New League" class="headersub-msg"></Label>
+
+        <GridLayout rows="*,*,*,*,*,*" columns="30%,*" class="c-grid input"
+            [isEnabled]="!processing">
+            <Image row="0" col="0" [src]="firstRule == false ? '~/Images/unchecked.png' :'~/Images/checked.png' "
+                (tap)="onClickFirstCHK()" class="icon-selected c-first-line"
+                horizontalAlignment="left" verticalAlignment="top"></Image>
+
+            <Label row="0" (tap)="onClickFirstCHK()" col="1" textWrap="true"
+                text="I understand that I will be the administrator for the league and I will need to select the games to be played each week and enter the game scores for my league."
+                verticalAlignment="top" horizontalAlignment="left" class="arrow-next first-line after-line"></Label>
+
+
+            <Label row="1" colSpan="2" class="list-separator"></Label>
+            <Image row="2" col="0" [src]="secondRule == false ? '~/Images/unchecked.png' :'~/Images/checked.png' "
+                class="icon-selected c-first-line " horizontalAlignment="left"
+                verticalAlignment="top" (tap)="onClickSecondCHK()"></Image>
+            <Label row="2" col="1" textWrap="true" text="I understand that I need at least 10 players to join in order to activate the new league."
+                verticalAlignment="top" (tap)="onClickSecondCHK()"
+                horizontalAlignment="left" class="arrow-next first-line after-line"></Label>
+
+
+            <Label row="3" colSpan="2" class="list-separator"></Label>
+            <Image row="4" col="0" (tap)="onClickThirdCHK()" [src]="thirdRule == false ? '~/Images/unchecked.png' :'~/Images/checked.png' "
+                class="icon-selected c-first-line" horizontalAlignment="left"
+                verticalAlignment="top"></Image>
+            <Label row="4" (tap)="onClickThirdCHK()" col="1" textWrap="true"
+                text="I understand that I need an even number of players. If there is an odd number of players, I will be excluded from league play."
+                verticalAlignment="top" horizontalAlignment="left" class="arrow-next first-line after-line"></Label>
+
+        </GridLayout>
+
+        <TextField [(ngModel)]="leagueName" required hint="League Name" class="c-text input"
+            #element #elementModel="ngModel" [isEnabled]="!processing"></TextField>
+        <!-- <Label class="validation " [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label> -->
+
+        <TextField [(ngModel)]="leaguePassword" required hint="League Password"
+            secure="true" class="c-text input" #element #elementModel="ngModel"
+            [isEnabled]="!processing"></TextField>
+        <!-- <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label> -->
+
+
+        <TextField [(ngModel)]="leagueConfirmPassword" required hint="Confirm League Password"
+            secure="true" class="c-text input" #element #elementModel="ngModel"
+            [isEnabled]="!processing"></TextField>
+        <!-- <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label> -->
+
+
+        <TextField [(ngModel)]="leaguenote" text="" required hint="Note"
+            class="c-text input" #element #elementModel="ngModel" [isEnabled]="!processing"></TextField>
+        <!-- <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label> -->
+        <ActivityIndicator [busy]="processing" class="activity-indicator"></ActivityIndicator>
+        <Button text="Submit" [isEnabled]="firstRule && secondRule && thirdRule && leaguePassword != '' && leaguePassword != undefined && leagueConfirmPassword!= '' && leagueConfirmPassword != undefined  && (leagueName!= '' && leagueName != undefined) && (leaguenote != '' && leaguenote != undefined)"
+            (tap)="createLeague()" class="ico c-login-btn border-c-login-btn button"
+            style="margin-bottom:50px;"></Button>
+
+    </StackLayout>
+</Body>

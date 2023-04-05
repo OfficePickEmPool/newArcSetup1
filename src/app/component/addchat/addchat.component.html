@@ -1,0 +1,38 @@
+<Chatdashboard>
+    <GridLayout rows="*,*,*">
+        <StackLayout row="0" class="input" [isEnabled]="!processing">
+            <Label text="New Chat" class="headersub-msg"></Label>
+
+            <SearchBar (textChange)="onTextChanged($event)" (clear)="onClear($event)"
+                class="input" row="1" hint="Search By Name" style="background-color:white;"></SearchBar>
+
+            <Label text="Select User(s): " class="listviewheading"></Label>
+
+            <RadListView [isEnabled]="!processing" height="400" [items]="allusers"
+                class="c-list" selectionBehavior="Press" multipleSelection="true"
+                width="90%" (itemSelected)="onItemSelected($event)"
+                (itemDeselected)="onItemDeselected($event)">
+                <ng-template tkListItemTemplate let-item="item">
+                    <StackLayout class="c-list-name">
+                        <Label class="nameLabel" [text]="item.FullName"></Label>
+                    </StackLayout>
+                </ng-template>
+            </RadListView>
+
+        </StackLayout>
+        <TextField [isEnabled]="!processing" row="1" hint="Group name"
+            [(ngModel)]="chatGroupName" class="c-text input" [visibility]="selectedusercount > 1 ? 'visible' : 'collapse'"></TextField>
+        <ActivityIndicator rowspan="3" height="100px" width="100px" [busy]="processing"></ActivityIndicator>
+        <GridLayout [isEnabled]="!processing" row="2" columns="*,auto" class="bottompanel input"
+            width="90%" height="70">
+            <TextView [isEnabled]="!processing" [(ngModel)]="chatMessaage"
+                col="0" hint="Type a message" class="txtsend ">
+            </TextView>
+
+            <!-- <TextField col="0" hint="Enter text..." class="txtsend"></TextField> -->
+            <Label col="1" [isEnabled]="!processing" [text]="sendIcon" (tap)="btnSendMessage()"
+                class="ico icon  btnsend" (loaded)="onLabelLoaded($event)"></Label>
+        </GridLayout>
+    </GridLayout>
+
+</Chatdashboard>

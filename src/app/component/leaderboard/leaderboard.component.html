@@ -1,0 +1,51 @@
+<Letsplaydashboard>
+    <StackLayout>
+        <Label text="Division Standing" class="headersub-msg"></Label>
+
+
+
+        <Label row="1" colspan="2" [text]="selectedDivisionName" hint="Select Division"
+            [class]="device=='Android' ? 'c-text c-lbl-android' : 'c-text c-lbl-ios'"
+            (tap)="action()" [isEnabled]="!isBusy" [isUserInteractionEnabled]="!isBusy"></Label>
+
+        <FlexboxLayout style="margin-top:70px;" flexDirection="row" class="c-grid-heading input"
+            [isEnabled]="!isBusy" [isUserInteractionEnabled]="!isBusy">
+            <Label text="Rank" class="c-grid-heading list-group-item-heading"
+                style="width: 20%; padding-left:30px;"></Label>
+            <Label text="User" class="c-grid-heading list-group-item-heading"
+                style="width: 50%"></Label>
+            <Label text="W" class="c-grid-heading list-group-item-heading"
+                style="width: 10%"></Label>
+            <Label text="L" class="c-grid-heading list-group-item-heading"
+                style="width: 10%"></Label>
+            <Label text="T" class="c-grid-heading list-group-item-heading"
+                style="width: 10%"></Label>
+        </FlexboxLayout>
+
+        <ListView class="list-group input" [items]="scoreCardList"
+            [isEnabled]="!isBusy" [isUserInteractionEnabled]="!isBusy" style="height:{{screenHeight-1300}}px; background-color:transperent;">
+            <ng-template let-record="item" let-i="index">
+                <FlexboxLayout flexDirection="row" [class]="record.User.UserName == currentUserName ? 'hightlight list-group-item' : 'unhightlight list-group-item' ">
+
+                    <Label [text]="i+1" textWrap="true" class="list-group-item-heading c-grid-font"
+                        verticalAlignment="center" style="width: 20%;"></Label>
+
+                    <Label [text]="record.User.UserName" textWrap="true"
+                        class="list-group-item-heading c-grid-font"
+                        verticalAlignment="center" style="width: 50%"></Label>
+                    <Label [text]="record.Wins" textWrap="true" class="list-group-item-heading c-grid-font"
+                        verticalAlignment="center" style="width: 10%"></Label>
+                    <Label [text]="record.Losses" textWrap="true" class="list-group-item-heading c-grid-font"
+                        verticalAlignment="center" style="width: 10%"></Label>
+                    <Label [text]="record.Ties" textWrap="true" class="list-group-item-heading c-grid-font"
+                        verticalAlignment="center" style="width: 10%"></Label>
+                </FlexboxLayout>
+            </ng-template>
+        </ListView>
+
+        <ActivityIndicator [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
+        <Button text="Playoffs" class="c-login-btn border-c-login-btn button"
+            (tap)="btnPlayoffs()" [isEnabled]="!isBusy" [nsRouterLink]="['/playoff']"></Button>
+
+    </StackLayout>
+</Letsplaydashboard>

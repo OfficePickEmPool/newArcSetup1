@@ -1,0 +1,14 @@
+<Body [IsVisibleBackButton]="'collapsed'">
+    <GridLayout rows="auto auto auto auto auto auto">
+        <Image row="0" src="~/Images/logo.png" class="welcome-logo"></Image>
+        <Label row="1" [text]="'Welcome '+userName" class="header-msg"></Label>
+        <Label row="2" [text]="playIcon + ' Lets Play'" class="ico lblMessageletsPlay borderletsplay"
+            [nsRouterLink]="['/availableleagueletsplay']"></Label>
+        <Label row="3" [text]="settingIcon+ ' Manage Leagues'" (tap)="onTapManageLeagues()"
+            class="ico lblMessagemanageLeagues bordermanageLeagues"></Label>
+        <Label row="4" [text]="subscriptionIcon +' Subscription'" class="ico lblMessageSub borderSub"
+            [nsRouterLink]="['/subscriptiondetail']"></Label>
+        <Label row="5" text="Instructions-How to get Started?" class="lblMessageIns borderIns"
+            [nsRouterLink]="['/instructions']" style="margin-bottom:50px;"></Label>
+    </GridLayout>
+</Body>

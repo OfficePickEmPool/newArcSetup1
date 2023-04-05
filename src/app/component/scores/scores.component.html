@@ -1,0 +1,122 @@
+<Leaguedashboard>
+    <GridLayout [class.dialogOpen]="dialogOpen">
+        <GridLayout class="content">
+            <GridLayout rows="*,*,*,*,*" [class.dialogOpen]="dialogOpen">
+
+                <Label row="0" text="Scores" class="headersub-msg"></Label>
+                <Label row="1" col="0" [text]="selectedWeekName" hint="Select Week"
+                    [class]="device=='Android' ? 'c-text c-lbl-android' : 'c-text c-lbl-ios'"
+                    (tap)="action()"></Label>
+                <GridLayout row="2" rows="3*, *" style="width:90%">
+                    <GridLayout row="0" rows="auto" columns="*,*" visibility="{{hideSwipeBtn ? 'hidden' : 'visible'}}">
+                        <GridLayout row="0" col="0" verticalAlignment="bottom"
+                            class="m-t-10">
+                            <Image src="~/Images/prev-btn.png" class="c-nav-button input"
+                                horizontalAlignment="Right" (tap)="skipIntro(1)"
+                                [isUserInteractionEnabled]="!isBusy"
+                                [isEnabled]="!isBusy"></Image>
+
+                        </GridLayout>
+                        <GridLayout row="0" col="1" verticalAlignment="bottom"
+                            class="m-t-10">
+                            <Image src="~/Images/next-btn.png" class="c-nav-button input"
+                                horizontalAlignment="Left" (tap)="skipIntro(2)"
+                                [isUserInteractionEnabled]="!isBusy"
+                                [isEnabled]="!isBusy"></Image>
+                        </GridLayout>
+                    </GridLayout>
+
+                    <GridLayout [isUserInteractionEnabled]="!isBusy" row="1"
+                        rows="*" #gridContain (swipe)="onSwipe($event)">
+                        <GridLayout rows="*, 2*, *" *ngFor="let item of seletedLeagueGames; let i = index"
+                            visibility="{{currentSlideNum == i || prevSlideNum == i ? 'visible' : 'hidden'}}">
+                            <GridLayout rows="*,*" width="100%" row="0" style="margin-top:10px;">
+                                <Label row="0" text="Game {{i+1}}" class="lblRules borderRules"></Label>
+                                <Label row="1" co.0.lSpan="2" class="list-separator"></Label>
+                            </GridLayout>
+                            <GridLayout class="carousel-item-circle" row="1"
+                                columns="*,30,*" horizontalAlignment="center"
+                                verticalAlignment="center">
+                                <GridLayout rows="*,*,*,*" col="0" class="c-grid-bg">
+                                    <Label row="0" text="FAV" class="c-lbl-fav-left"
+                                        horizontalAlignment="Left"
+                                        verticalAlignment="Top" visibility="{{item.Game.Team1.Id == item.Game.FavouriteTeamId ? 'visible' : 'hidden'}}"></Label>
+                                    <Image row="1" src="~/Images/red-halmet.png"
+                                        class="c-halmet"></Image>
+                                    <Label row="2" text="{{item.Game.Team1.Name}}"
+                                        class="c-lable-name" textWrap="true"
+                                        (loaded)="onLabelLoaded($event)"></Label>
+                                    <Label row="3" text="Enter Score" class="c-lable-score-edit"
+                                        visibility="{{item.Team1Score==null ? 'visible' : 'hidden'}}"
+                                        (tap)="showPopupTeam(item,i)"
+                                        (loaded)="onLabelLoaded($event)"></Label>
+                                    <Label row="3" text="{{item.Team1Score}}"
+                                        class="c-lable-score" visibility="{{item.Team1Score==null ? 'hidden' : 'visible'}}"
+                                        (tap)="showPopupTeam(item,i)"
+                                        (loaded)="onLabelLoaded($event)"></Label>
+                                </GridLayout>
+                                <GridLayout col="1" verticalAlignment="middle">
+                                    <Image [src]="item.Game.NoHomeTeam ? '~/Images/vs.png' : '~/Images/at.png'"></Image>
+                                </GridLayout>
+                                <GridLayout rows="*,*,*,*" col="2" class="c-grid-bg">
+                                    <Label row="0" text="FAV" class="c-lbl-fav-right"
+                                        horizontalAlignment="Right"
+                                        verticalAlignment="Top" visibility="{{item.Game.Team2.Id == item.Game.FavouriteTeamId ? 'visible' : 'hidden'}}"></Label>
+                                    <Image row="1" src="~/Images/blue-halmet.png"
+                                        class="c-halmet"></Image>
+                                    <Label row="2" text="{{item.Game.Team2.Name}}"
+                                        class="c-lable-name" textWrap="true"
+                                        (loaded)="onLabelLoaded($event)"></Label>
+                                    <Label row="3" class="c-lable-score-edit"
+                                        text="Enter Score" visibility="{{item.Team2Score==null ? 'visible' : 'hidden'}}"
+                                        (tap)="showPopupTeam(item,i)"
+                                        (loaded)="onLabelLoaded($event)"></Label>
+                                    <Label row="3" class="c-lable-score" text="{{item.Team2Score}}"
+                                        visibility="{{item.Team2Score==null ? 'hidden' : 'visible'}}"
+                                        (tap)="showPopupTeam(item,i)"
+                                        (loaded)="onLabelLoaded($event)"></Label>
+                                </GridLayout>
+                            </GridLayout>
+                            <GridLayout width="49%" row="2"
+                                horizontalAlignment="center"
+                                verticalAlignment="center">
+                                <Button text="Save Score" class="c-login-btn border-c-login-btn button"
+                                    (tap)="saveTeamScores(item)" [isEnabled]="!(isBusy &&(item.Team1Score == null || item.Team2Score == null)||IsWeekEnded==true || isGameStarted(item.Game.StartDateTime)==false)"></Button>
+                            </GridLayout>
+                        </GridLayout>
+                    </GridLayout>
+                </GridLayout>
+            </GridLayout>
+        </GridLayout>
+        <AbsoluteLayout class="dialog-wrapper">
+            <StackLayout class="dialog">
+                <Label class="c-popup-header" text="Enter Score"></Label>
+                <GridLayout columns="*,*" rows="*,*,*">
+                    <Button row="0" col="0" class="ico plusminus" text="+"
+                        (tap)="increaseTeam1()"></Button>
+
+                    <Label row="1" col="0" text="{{countPointTeam1}}" class="c-count"
+                        (loaded)="onLabelLoaded($event)"></Label>
+
+                    <Button row="2" col="0" class="ico plusminus" text="-"
+                        (tap)="decreaseTeam1()"></Button>
+
+                    <Button row="0" col="1" class="ico plusminus" text="+"
+                        (tap)="increaseTeam2()"></Button>
+
+                    <Label row="1" col="1" text="{{countPointTeam2}}" class="c-count"
+                        (loaded)="onLabelLoaded($event)">
+                    </Label>
+
+                    <Button row="2" col="1" class="ico plusminus" text="-"
+                        (tap)="decreaseTeam2()"></Button>
+                </GridLayout>
+
+
+                <Button class="c-login-btn border-c-login-btn" text="Close"
+                    (tap)="closePopupTeam()"></Button>
+            </StackLayout>
+        </AbsoluteLayout>
+        <ActivityIndicator [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
+    </GridLayout>
+</Leaguedashboard>

@@ -1,0 +1,60 @@
+<ScrollView>
+    <StackLayout class="common-background input" [isEnabled]="!processing">
+
+        <Label text="Registration" class="header-msg"></Label>
+        <TextField [isEnabled]="!processing" [(ngModel)]="user.FirstName"
+            required hint="First Name" class="c-text" #element #elementModel="ngModel"></TextField>
+        <!-- <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label> -->
+
+        <TextField [isEnabled]="!processing" [(ngModel)]="user.LastName"
+            required hint="Last Name" class="c-text" #element #elementModel="ngModel"></TextField>
+        <!-- <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label> -->
+
+        <TextField [isEnabled]="!processing" [(ngModel)]="user.Email"
+            required hint="Email" class="c-text" #element #elementModel="ngModel"></TextField>
+        <!-- <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label> -->
+
+        <TextField [isEnabled]="!processing" [(ngModel)]="user.PhoneNumber"
+            required hint="Phone Number" class="c-text" #element
+            #elementModel="ngModel"></TextField>
+        <!-- <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label> -->
+
+        <TextField [isEnabled]="!processing" [(ngModel)]="user.UserName"
+            required hint="User Name" class="c-text" #element #elementModel="ngModel"></TextField>
+        <!-- <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label> -->
+
+
+
+        <TextField [isEnabled]="!processing" [(ngModel)]="user.Password"
+            [visibility]="isCheck == 1 ? 'visible' : 'collapse'" required
+            hint="Password" secure="true" class="c-text" #element
+            #elementModel="ngModel"></TextField>
+
+        <!-- <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label> -->
+
+
+        <TextField [isEnabled]="!processing" [(ngModel)]="cnfpassword"
+            [visibility]="isCheck == 1 ? 'visible' : 'collapse'" required
+            hint="Confirm Password" secure="true" class="c-text" #element
+            #elementModel="ngModel">
+        </TextField>
+        <!-- <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label> -->
+        <GridLayout columns="80, auto" rows="50">
+            <Switch [isEnabled]="!processing" text="Change Password" checked="false"
+                [visibility]="isLogin == false ? 'collapse' : 'visible'"
+                (checkedChange)="onCheckedChange($event)" class="m-15 secondSwitchStyle"
+                horizontalAlignment="left" row="0" col="0"></Switch>
+
+            <Label text="Change Password" checked="false" [visibility]="isLogin == false ? 'Hidden' : 'visible'"
+                row="0" col="1" colSpan="2" class="normal-font"></Label>
+
+        </GridLayout>
+
+        <ActivityIndicator [busy]="processing" class="activity-indicator"></ActivityIndicator>
+
+        <Button [text]="isLogin ? 'Change & Save':'Register'" (tap)="onRegisterBtnTap()"
+            class="c-login-btn border-c-login-btn button" [isEnabled]="user.FirstName !='' && user.FirstName != undifined && user.LastName !='' && user.LastName !=undifined && user.Email!='' && user.Email!=undifined && user.PhoneNumber !='' && user.PhoneNumber != undifined && user.UserName !='' && user.UserName != undifined && user.Password !='' && user.Password != undifined && cnfpassword !='' && cnfpassword != undifined"></Button>
+        <Button text="Exit" class="c-exit-btn border-c-exit-btn"
+            [nsRouterLink]="isLogin ? ['/home'] : ['/login']" style="margin-bottom:50px;"></Button>
+    </StackLayout>
+</ScrollView>

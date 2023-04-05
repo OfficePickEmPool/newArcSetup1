@@ -1,0 +1,65 @@
+<Body>
+    <StackLayout class="input" [isEnabled]="!isBusy">
+        <Label text="Subscribe with us" class="headersub-msg"></Label>
+        <Label text="Select Subscription Type" class="c-title normal-font"></Label>
+        <GridLayout rows="*,*,*,*,*" columns="auto,*" class="c-grid2" *ngFor="let item of subscriptionTypeList; let i = index">
+            <!-- <StackLayout rows="*,*,*,*,*" columns="auto,*" class="c-grid"> -->
+            <!-- <StackLayout *ngFor="let item of subscriptionTypeList; let i = index"> -->
+            <Label row="{{i}}" col="0" text="{{item.Name}}" verticalAlignment="center"
+                horizontalAlignment="left" class="arrow-next first-line input"
+                (tap)="onTapSubscriptionType(i)" [isEnabled]="!isBusy"
+                [isUserInteractionEnabled]="!isBusy">
+            </Label>
+            <Image row="{{i}}" col="1" [src]="item.IsChecked ? '~/Images/iconselected.png' : null"
+                class="icon-selected first-line input" horizontalAlignment="right"
+                (tap)="onTapSubscriptionType(i)" [isEnabled]="!isBusy"
+                [isUserInteractionEnabled]="!isBusy"></Image>
+
+            <Label row="{{i+1}}" colSpan="2" class="list-separator"></Label>
+            <!-- </StackLayout>
+            </StackLayout> -->
+        </GridLayout>
+        <TextField required hint="First Name" [(ngModel)]="subscription.Payment.PaymentMethod.FirstName"
+            class="c-text input" #element #elementModel="ngModel" [isEnabled]="!isBusy"></TextField>
+        <!-- <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label> -->
+
+        <TextField required hint="Last Name" [(ngModel)]="subscription.Payment.PaymentMethod.LastName"
+            class="c-text input" #element #elementModel="ngModel" [isEnabled]="!isBusy"></TextField>
+        <!-- <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label> -->
+
+        <TextField required hint="Address" [(ngModel)]="subscription.Payment.PaymentMethod.Address"
+            class="c-text input" #element #elementModel="ngModel" [isEnabled]="!isBusy"></TextField>
+        <!-- <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label> -->
+
+        <TextField required hint="City" [(ngModel)]="subscription.Payment.PaymentMethod.City"
+            class="c-text input" #element #elementModel="ngModel" [isEnabled]="!isBusy"></TextField>
+        <!-- <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label> -->
+
+        <TextField required hint="Zip Code" [(ngModel)]="subscription.Payment.PaymentMethod.Zip"
+            class="c-text input" #element #elementModel="ngModel" [isEnabled]="!isBusy"></TextField>
+        <!-- <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label> -->
+
+        <TextField required hint="Card Number" [(ngModel)]="subscription.Payment.PaymentMethod.CardNumber"
+            class="c-text input" #element #elementModel="ngModel" [isEnabled]="!isBusy"></TextField>
+        <!-- <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label> -->
+
+        <TextField required hint="Sec. Code (CVC)" [(ngModel)]="subscription.Payment.PaymentMethod.CardCode"
+            secure="true" class="c-text input" #element #elementModel="ngModel"
+            [isEnabled]="!isBusy"></TextField>
+        <!-- <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label> -->
+
+        <TextField required text="" hint="Exp. Mth " [(ngModel)]="exp_month"
+            class="c-text input" #element #elementModel="ngModel" [isEnabled]="!isBusy"></TextField>
+        <!-- <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label> -->
+
+        <TextField required hint="Exp. Year (YYYY)" [(ngModel)]="exp_year"
+            class="c-text input" #element #elementModel="ngModel" [isEnabled]="!isBusy"></TextField>
+        <!-- <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label> -->
+        <ActivityIndicator [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
+        <Button [text]="payIcon+' Pay '+amount" class="ico c-login-btn border-c-login-btn button"
+            (tap)="onPaymentClick()" [isEnabled]="!isBusy && subscription.Payment.PaymentMethod.FirstName !=''&& subscription.Payment.PaymentMethod.FirstName !=undifined && subscription.Payment.PaymentMethod.LastName!='' && subscription.Payment.PaymentMethod.LastName !=undifined && subscription.Payment.PaymentMethod.Address !='' && subscription.Payment.PaymentMethod.Address!=undifined && subscription.Payment.PaymentMethod.City !='' && subscription.Payment.PaymentMethod.City !=undifined && subscription.Payment.PaymentMethod.Zip!='' && subscription.Payment.PaymentMethod.Zip !=undifined && subscription.Payment.PaymentMethod.CardNumber !='' && subscription.Payment.PaymentMethod.CardNumber!=undifined && subscription.Payment.PaymentMethod.CardCode !='' && subscription.Payment.PaymentMethod.CardCode !=undifined && exp_month !='' && exp_month !=undifined && exp_year !='' && exp_year !=undifined"></Button>
+        <Button text="Exit" [nsRouterLink]="['/home']" class="c-exit-btn border-c-exit-btn button"
+            style="margin-bottom:80px;" [isEnabled]="!isBusy"></Button>
+
+    </StackLayout>
+</Body>

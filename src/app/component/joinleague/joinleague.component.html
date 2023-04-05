@@ -1,0 +1,23 @@
+<Body>
+    <StackLayout>
+
+        <Label text="Join League" class="headersub-msg"></Label>
+
+        <TextField [(ngModel)]="leagueName" required hint="League Name" class="c-text input"
+            #element #elementModel="ngModel" [isEnabled]="!isBusy"></TextField>
+        <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label>
+
+        <TextField [(ngModel)]="leaguePassword" required hint="League Password"
+            secure="true" class="c-text input" #element #elementModel="ngModel"
+            [isEnabled]="!isBusy"></TextField>
+        <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label>
+
+
+        <Button text="Submit" (tap)="btnjoinLeague()" class="ico c-login-btn border-c-login-btn button"
+            [isEnabled]="!isBusy && leagueName != '' && leagueName != undefined && leaguePassword != '' && leaguePassword != undefined"></Button>
+
+        <Button text="Exit" class="c-exit-btn border-c-exit-btn button"
+            [nsRouterLink]="['/availableleagueletsplay']" [isEnabled]="!isBusy"></Button>
+    </StackLayout>
+    <ActivityIndicator [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
+</Body>

@@ -1,0 +1,30 @@
+<Letsplaydashboard>
+    <StackLayout>
+        <Label text="FAQ" class="headersub-msg"></Label>
+
+        <GridLayout style="margin-top: 40px; width:90%;">
+            <StackLayout>
+                <StackLayout style="margin-bottom: 20px" *ngFor="let cate of categoryData">
+                    <GridLayout class="c-grid-heading" rows="*" columns="*,auto">
+                        <Label row="0" col="0" horizontalAlignment="left"
+                            [text]="cate.category" (tap)="clicked(cate)"
+                            class="accordation-heading" textWrap="true"></Label>
+                        <Label row="0" col="1" horizontalAlignment="right"
+                            [text]="clickedArray.includes(cate) ? '-' : '+'"
+                            class="accordation-heading2" (tap)="clicked(cate)"></Label>
+                    </GridLayout>
+                    <StackLayout class="accordation-content">
+                        <HtmlView [visibility]="clickedArray.includes(cate) ? 'visible' : 'collapsed'"
+                            textWrap="true" [html]="cate.categorydetails"
+                            class="c-view" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; width:90%; background-color:transparent;
+							margin-top:10px;">
+                        </HtmlView>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+        </GridLayout>
+
+        <Button text="More" class="c-login-btn border-c-login-btn" (tap)="btnMore()"></Button>
+
+    </StackLayout>
+</Letsplaydashboard>

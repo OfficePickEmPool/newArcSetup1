@@ -1,0 +1,41 @@
+<ScrollView>
+    <StackLayout class="common-background">
+
+        <Image horizontalAlignment="center" verticalAlignment="center" src="~/Images/logo.png"
+            class="welcome-logo"></Image>
+        <Image horizontalAlignment="center" verticalAlignment="center" src="~/Images/txt-bg.png"
+            class="c-ribbon"></Image>
+        <!-- <Label text="Welcome" class="welcomemessage"></Label> -->
+        <GridLayout rows="*,*,*,*,*,*" class="input" [isEnabled]="!processing">
+            <TextField [isEnabled]="!processing" row="1" [(ngModel)]="userName"
+                required hint="Username" [(ngModel)]="textField" class="c-text"
+                #element #elementModel="ngModel"></TextField>
+            <!-- <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label> -->
+            <TextField [isEnabled]="!processing" row="2" [(ngModel)]="passWord"
+                required hint="Password" secure="true" [(ngModel)]="textField"
+                class="c-text" #element #elementModel="ngModel"></TextField>
+            <!-- <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'"></Label> -->
+
+            <Button [isEnabled]="!processing" row="3" [text]="loginIcon+' Login'"
+                (tap)="onLoginClick()" class="ico c-login-btn border-c-login-btn"></Button>
+
+            <GridLayout row="4" columns="*,*" style="margin:30px 0px; width:90%;">
+                <StackLayout class="blue3-container" horizontalAlignment="center">
+                    <Label [text]="signupIcon+' Create Account'"
+                        [nsRouterLink]="['/register']" class="ico c-font"></Label>
+                </StackLayout>
+                <StackLayout class="blue3-container" colSpan="2" row="1" col="2"
+                    horizontalAlignment="center">
+                    <Label class="ico c-font" [text]="forgotpassIcon+' Forgot Password?'"
+                        [nsRouterLink]="['/forgotpassword']"></Label>
+                </StackLayout>
+            </GridLayout>
+            <Label row="5" class="ico c-font" [text]="userIcon+' Forgot Username?'"
+                [nsRouterLink]="['/forgotpassword']" horizontalAlignment="center"></Label>
+            <ActivityIndicator row="2" [busy]="processing"></ActivityIndicator>
+        </GridLayout>
+        <Label type="submit" class="bottom-msg" text="Version {{appVersion}} {{buildVersion}} {{releaseMode}}">
+        </Label>
+       
+    </StackLayout>
+</ScrollView>

@@ -1,0 +1,17 @@
+<Letsplaydashboard>
+    <GridLayout rows="*,*" columns="*">
+        <Label row="0" text="Rules" class="headersub-msg"></Label>
+
+        <ListView row="1" class="list-group c-transperent" [items]="rules"
+            (itemTap)="onItemTap($event)" height="1300px">
+            <ng-template let-rules="item">
+                <FlexboxLayout flexDirection="row" class="list-group-item" style="background-color:white;">
+                    <Image src="~/Images/notes.png" class="thumb img-circle"></Image>
+                    <Label [text]="rules.name" class=" list-group-item-heading"
+                        (loaded)="onLabelLoaded($event)"></Label>
+                </FlexboxLayout>
+            </ng-template>
+        </ListView>
+
+    </GridLayout>
+</Letsplaydashboard>

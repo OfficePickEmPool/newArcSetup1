@@ -1,0 +1,34 @@
+<Leaguedashboard>
+    <StackLayout>
+        <Label text="League Players" class="headersub-msg"></Label>
+        <FlexboxLayout flexDirection="row" class="c-grid-heading input"
+            [isEnabled]="!isBusy" [isUserInteractionEnabled]="!isBusy">
+            <Label text="Name" class="c-grid-heading list-group-item-heading"
+                style="width: 33.33%; padding-left:30px;"></Label>
+            <Label text="Number" class="c-grid-heading list-group-item-heading"
+                style="width: 33.33%"></Label>
+            <Label text="Send Email" class="c-grid-heading list-group-item-heading"
+                style="width: 33.33%"></Label>
+        </FlexboxLayout>
+        <ListView class="list-group c-transperent input" [items]="playersList"
+            (itemTap)="onItemTap($event)" [isEnabled]="!isBusy" [isUserInteractionEnabled]="!isBusy"
+            style="height:{{screenHeight-650}}px; background-color:transperent;">
+
+            <ng-template let-ply="item" let-i="index">
+                <FlexboxLayout flexDirection="row" class="list-group-item "
+                    style="background-color:white;">
+                    <Label [text]="ply.UserName" class="list-group-item-heading c-grid-font"
+                        style="width: 33.33%;" verticalAlignment="center"
+                        horizontalAlignment="left"></Label>
+                    <Label [text]="ply.PhoneNumber" textWrap="true" class="list-group-item-heading c-grid-font"
+                        style="width: 33.33%" verticalAlignment="center"></Label>
+                    <Label text="Send Email" textWrap="true" class="list-group-item-heading c-grid-font c-grid-button"
+                        (tap)="setPlayerDetail(ply)" verticalAlignment="center"
+                        style="width: 33.33%"></Label>
+
+                </FlexboxLayout>
+            </ng-template>
+        </ListView>
+        <ActivityIndicator [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
+    </StackLayout>
+</Leaguedashboard>

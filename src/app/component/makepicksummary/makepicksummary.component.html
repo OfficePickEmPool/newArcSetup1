@@ -1,0 +1,47 @@
+<Letsplaydashboard>
+    <StackLayout>
+        <Label text="Mick pick Summary" class="headersub-msg"></Label>
+
+        <Label [text]="selectedWeekName" class="c-grid-heading" width="100%"></Label>
+
+
+        <ListView [isEnabled]="!isBusy" [isUserInteractionEnabled]="!isBusy"
+            class="list-group c-transperent input" [items]="leagueGames"
+            (itemTap)="onItemTap($event)" style="height:{{screenHeight-700}}px; background-color:transperent;">
+            <ng-template let-myItem="item" let-i="index">
+                <FlexboxLayout flexDirection="row" class="list-group-item"
+                    style="background-color:white;">
+
+                    <Label text="G{{i + 1}}" textWrap="true" class="c-lable-name list-group-item-heading c-grid-font "
+                        style="width: 13%;" (loaded)="onLabelLoaded($event)"></Label>
+
+                    <Label [text]="myItem.LeagueGame.Game.Team1.Name"
+                        textWrap="true" [class]="myItem.LeagueGame.Game.Team1.Id == myItem.Picked.Id ? 'c-grid-head-green list-group-item-heading c-grid-font' :'c-grid-head list-group-item-heading c-grid-font'"
+                        verticalAlignment="center" style="width: 29%"
+                        (loaded)="onLabelLoaded($event)"></Label>
+
+                    <Label text="@" textWrap="true" class="list-group-item-heading c-grid-font"
+                        style="width: 10%; text-align:center" (loaded)="onLabelLoaded($event)"></Label>
+
+                    <Label [text]="myItem.LeagueGame.Game.Team2.Name"
+                        textWrap="true" [class]="myItem.LeagueGame.Game.Team2.Id == myItem.Picked.Id ? 'c-grid-head-green list-group-item-heading c-grid-font' :'c-grid-head list-group-item-heading c-grid-font'"
+                        verticalAlignment="center" style="width: 29%"
+                        (loaded)="onLabelLoaded($event)"></Label>
+
+                    <Label text="Edit Pick" (tap)="updateSlider(myItem.LeagueGame.LeagueId,i)"
+                        [visibility]="isGameStarted(myItem.LeagueGame.Game.StartDateTime) == true ? 'collapse': 'visible'"
+                        textWrap="true" class="border-c-login-btn2 list-group-item-heading c-grid-font c-grid-button"
+                        verticalAlignment="center" style="width: 20%"
+                        (loaded)="onLabelLoaded($event)"></Label>
+
+                    <Label text="Game Started" [visibility]="isGameStarted(myItem.LeagueGame.Game.StartDateTime) == true ? 'visible': 'collapse'"
+                        textWrap="true" class="border-c-login-btn2 list-group-item-heading c-grid-font c-grid-button button2"
+                        verticalAlignment="center" style="width: 20%"
+                        isEnabled="false" (loaded)="onLabelLoaded($event)"></Label>
+
+                </FlexboxLayout>
+            </ng-template>
+        </ListView>
+        <ActivityIndicator [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
+    </StackLayout>
+</Letsplaydashboard>

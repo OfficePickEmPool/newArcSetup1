@@ -1,0 +1,33 @@
+<Body>
+    <GridLayout rows="*,*,*,*">
+        <Label text="Available Leagues" row="0" class="headersub-msg"></Label>
+        <!-- <GridLayout row="0" rows="*" columns="*,*" class="headersub-msg">
+            <Label row="0" col="0" text="  Available Leagues"
+                horizontalAlignment="Left"></Label>
+            <Label row="0" col="1" [text]="addIcon+'  '" class="ico"
+                horizontalAlignment="Right" [nsRouterLink]="['/createleague']"></Label>
+        </GridLayout> -->
+        <SearchBar class="input" row="1" hint="Search League By Name"
+            (textChange)="onTextChanged($event)" [text]="searchPhrase"
+            (clear)="onClear($event)" [isEnabled]="!isBusy"></SearchBar>
+        <ActivityIndicator row="2" [busy]="isBusy" class="activity-indicator"></ActivityIndicator>
+        <ListView [isUserInteractionEnabled]="!isBusy" row="2" class="list-group"
+            [items]="realLeague" (itemTap)="onItemTap($event)"
+            style="height:{{screenHeight-850}}px; background-color:transperent;">
+            <ng-template let-league="item">
+                <FlexboxLayout flexDirection="row" class="list-group-item"
+                    (tap)="setLeagueDetails(league)" style="background-color:white;">
+                    <Image src="
+                    ~/Images/cup-icon.png"
+                        (tap)="setLeagueDetails(league)" class="thumb img-circle">
+                    </Image>
+                    <Label [text]="league.Name" class="list-group-item-heading"
+                        (tap)="setLeagueDetails(league)" (loaded)="onLabelLoaded($event)"></Label>
+                </FlexboxLayout>
+            </ng-template>
+        </ListView>
+
+        <Button text="Create New League" row="3" class="c-login-btn border-c-login-btn button"
+            [nsRouterLink]="['/createleague']" [isEnabled]="!isBusy"></Button>
+    </GridLayout>
+</Body>

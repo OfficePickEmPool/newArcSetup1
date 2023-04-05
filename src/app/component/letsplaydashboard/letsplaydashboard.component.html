@@ -1,0 +1,42 @@
+<StackLayout>
+    <GridLayout rows="*, auto">
+        <GridLayout>
+        </GridLayout>
+        <GridLayout row="0" tkMainContent>
+
+            <Body>
+                <ng-content>
+                </ng-content>
+            </Body>
+        </GridLayout>
+
+        <GridLayout columns="*, *, *, *" height="60" row="1" class="bottom-navigation  c-bottom-menu">
+            <GridLayout col="0" rows="auto, *" class="bottom-navigation-item"
+                [class.selected]="isComponentSelected('/letsplaydashboardhome')"
+                (tap)="onNavItemTap('/letsplaydashboardhome')">
+                <Label row="0" [text]="homeIcon" class="ico icon">
+                </Label>
+                <Label row="1" text="Dashboard" class="label"></Label>
+            </GridLayout>
+
+            <GridLayout col="1" rows="auto, *" class="bottom-navigation-item"
+                [class.selected]="isComponentSelected('/makepick')" (tap)="onNavItemTap('/makepick')">
+                <Label row="0" [text]="makeIcon" class="ico icon"></Label>
+                <Label row="1" text="Make Pick" class="label"></Label>
+            </GridLayout>
+
+            <GridLayout col="2" rows="auto, *" class="bottom-navigation-item"
+                [class.selected]="isComponentSelected('/headtohead')" (tap)="onNavItemTap('/headtohead')">
+                <Label row="0" [text]="headtoheadIcon" class="ico icon"></Label>
+                <Label row="1" text="Head To Head" class="label"></Label>
+            </GridLayout>
+
+            <GridLayout col="3" rows="auto, *" class="bottom-navigation-item"
+                [class.selected]="isComponentSelected('/leaderboard')" (tap)="onNavItemTap('/leaderboard')">
+                <Label row="0" [text]="leaderIcon" class="ico icon">
+                </Label>
+                <Label row="1" text="Leader Board" class="label"></Label>
+            </GridLayout>
+        </GridLayout>
+    </GridLayout>
+</StackLayout>

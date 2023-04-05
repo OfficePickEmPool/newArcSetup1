@@ -1,0 +1,27 @@
+<Letsplaydashboard>
+    <GridLayout rows="*,*,*,*,*,*,*,*" columns="*">
+        <Label row="0" text="League Player Dashboard" class="headersub-msg"></Label>
+
+        <Label row="1" [text]="makeIcon+ ' Make Pick'" [nsRouterLink]="['/makepick']"
+            class="ico lblInstructions borderInstructions"></Label>
+
+        <Label row="2" [text]="headtoheadIcon+ ' Head To Head'"
+            [nsRouterLink]="['/headtohead']" class="ico lblscheduleIcon borderscheduleIcon"></Label>
+
+        <Label row="3" [text]="leaderIcon+ ' Leader Board'" [nsRouterLink]="['/leaderboard']"
+            class="ico lblScores borderScores"></Label>
+
+        <Label row="4" [text]="statIcon+ ' Statistics'" class="ico lblNotes borderNotes"
+            [nsRouterLink]="['/statistics']"></Label>
+
+        <Label row="5" [text]="viewruleIcon+ ' View Rules'" class="ico lblPlayer borderPlayer"
+            [nsRouterLink]="['/viewrulesletsplay']"></Label>
+
+        <Label row="6" [text]="noticeIcon+ ' View Notice'" [nsRouterLink]="['/viewnotice']"
+            class="ico lblRules borderRules"></Label>
+
+        <Label row="7" [text]="inviteIcon+ ' Invite Friends'" [nsRouterLink]="['/invitefriend']"
+            class="ico lblFriends borderFriends" style="margin-bottom:50px;"></Label>
+       
+    </GridLayout>
+</Letsplaydashboard>
